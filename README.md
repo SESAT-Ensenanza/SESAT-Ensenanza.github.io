@@ -33,6 +33,9 @@ assets/
 educacion-continua/
   cursos-obligatorios.html         Subpágina: cursos obligatorios
   cursos-especializados.html       Subpágina: cursos especializados
+cursos/
+  aesp/
+    index.html                     Curso CV-OBL-002 · Acciones Esenciales para la Seguridad del Paciente
 ```
 
 Todas las páginas usan `assets/estilos.css`; si se omite ese archivo, el sitio se ve sin diseño.

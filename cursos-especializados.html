@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cursos especializados · Jefatura de Enseñanza · Hospital Tonalá Centro</title>
+<meta name="description" content="Cursos especializados de Educación continua de la Jefatura de Enseñanza del Hospital Tonalá Centro (SESAT).">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&display=swap">
+<link rel="stylesheet" href="../assets/estilos.css">
+</head>
+<body>
+<div class="regla-superior"></div>
+
+<header class="barra">
+  <div class="contenedor">
+    <a class="marca" href="../index.html">
+      <b>Hospital Tonalá Centro</b>
+      <span>Jefatura de Enseñanza</span>
+    </a>
+    <button class="boton-menu" aria-expanded="false" aria-controls="menu">Menú</button>
+    <nav class="menu" id="menu">
+      <a href="../index.html#programas">Programas</a>
+      <a href="../index.html#congreso">Congreso</a>
+      <a href="../index.html#servicios">Servicios en línea</a>
+      <a href="../index.html#contacto">Contacto</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <section class="portada sub">
+    <div class="contenedor">
+      <p class="migas"><a href="../index.html">Inicio</a><span>/</span><a href="../index.html#programas">Educación continua</a><span>/</span>Especializados</p>
+      <p class="rotulo">Educación continua</p>
+      <h1>Cursos especializados</h1>
+      <p class="bajada">Cursos de actualización y profundización por disciplina o servicio, orientados al desarrollo de competencias específicas del personal.</p>
+      <nav class="pestanas" aria-label="Tipos de curso">
+        <a href="cursos-obligatorios.html">Cursos obligatorios</a>
+        <a href="cursos-especializados.html" aria-current="page">Cursos especializados</a>
+      </nav>
+    </div>
+  </section>
+
+  <section class="bloque">
+    <div class="contenedor">
+      <div class="rejilla">
+
+        <!-- ============================================================
+             PARA AGREGAR UN CURSO: copie el bloque de abajo (desde <article>
+             hasta </article>), quite las marcas de comentario que lo rodean,
+             llene los datos y BORRE el recuadro "vacio" que está al final.
+
+        <article class="tarjeta curso">
+          <p class="tipo">Especializado · Presencial</p>
+          <h3>Nombre del curso</h3>
+          <p>Descripción breve del propósito del curso.</p>
+          <dl>
+            <dt>Dirigido a</dt><dd>Personal de enfermería</dd>
+            <dt>Duración</dt><dd>20 horas</dd>
+            <dt>Periodo</dt><dd>Enero – marzo 2027</dd>
+          </dl>
+          <div class="acciones">
+            <a class="btn btn-primario" href="../cursos/nombre-del-curso/index.html">Ingresar al curso</a>
+            <a class="btn btn-secundario" href="../documentos/nombre-del-curso.pdf">Descargar material</a>
+          </div>
+        </article>
+        ============================================================ -->
+
+      </div>
+
+      <div class="vacio">
+        <b>Sin cursos publicados</b>
+        Los cursos especializados se publicarán próximamente.
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="contenedor">
+    <span><b>Jefatura de Enseñanza</b> · Hospital Tonalá Centro · SESAT</span>
+    <span>Tonalá, Jalisco · <span id="anio">2026</span></span>
+  </div>
+</footer>
+
+<script>
+  (function(){
+    var boton = document.querySelector('.boton-menu');
+    var menu = document.getElementById('menu');
+    boton.addEventListener('click', function(){
+      var abierto = menu.classList.toggle('abierto');
+      boton.setAttribute('aria-expanded', abierto ? 'true' : 'false');
+    });
+    document.getElementById('anio').textContent = new Date().getFullYear();
+  })();
+</script>
+</body>
+</html>

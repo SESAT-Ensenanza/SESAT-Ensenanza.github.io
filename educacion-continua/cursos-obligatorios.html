@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cursos obligatorios · Jefatura de Enseñanza · Hospital Tonalá Centro</title>
+<meta name="description" content="Cursos obligatorios de Educación continua de la Jefatura de Enseñanza del Hospital Tonalá Centro (SESAT).">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&display=swap">
+<link rel="stylesheet" href="../assets/estilos.css">
+</head>
+<body>
+<div class="regla-superior"></div>
+
+<header class="barra">
+  <div class="contenedor">
+    <a class="marca" href="../index.html">
+      <b>Hospital Tonalá Centro</b>
+      <span>Jefatura de Enseñanza</span>
+    </a>
+    <button class="boton-menu" aria-expanded="false" aria-controls="menu">Menú</button>
+    <nav class="menu" id="menu">
+      <a href="../index.html#programas">Programas</a>
+      <a href="../index.html#congreso">Congreso</a>
+      <a href="../index.html#servicios">Servicios en línea</a>
+      <a href="../index.html#contacto">Contacto</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <section class="portada sub">
+    <div class="contenedor">
+      <p class="migas"><a href="../index.html">Inicio</a><span>/</span><a href="../index.html#programas">Educación continua</a><span>/</span>Obligatorios</p>
+      <p class="rotulo">Educación continua</p>
+      <h1>Cursos obligatorios</h1>
+      <p class="bajada">Cursos que el personal del hospital debe acreditar conforme a la normativa institucional y a las disposiciones aplicables a su puesto y servicio.</p>
+      <nav class="pestanas" aria-label="Tipos de curso">
+        <a href="cursos-obligatorios.html" aria-current="page">Cursos obligatorios</a>
+        <a href="cursos-especializados.html">Cursos especializados</a>
+      </nav>
+    </div>
+  </section>
+
+  <section class="bloque">
+    <div class="contenedor">
+      <div class="rejilla">
+
+        <article class="tarjeta curso">
+          <p class="tipo">Obligatorio · En línea · CV-OBL-002</p>
+          <h3>Acciones Esenciales para la Seguridad del Paciente (AESP)</h3>
+          <p>Curso en formato de juego educativo, «Misión AESP: Cero daños evitables», con casos clínicos simulados sobre las ocho acciones esenciales, evaluación diagnóstica y evaluación final.</p>
+          <dl>
+            <dt>Dirigido a</dt><dd>Todo el personal del hospital</dd>
+            <dt>Modalidad</dt><dd>En línea, a su propio ritmo</dd>
+            <dt>Duración</dt><dd>2 h 50 min aprox. · 8 misiones</dd>
+            <dt>Aprobación</dt><dd>Calificación mínima de 80 en la evaluación final</dd>
+          </dl>
+          <div class="acciones">
+            <a class="btn btn-primario" href="../cursos/aesp/">Ingresar al curso</a>
+          </div>
+        </article>
+
+        <!-- ============================================================
+             PARA AGREGAR UN CURSO: copie el bloque de abajo (desde <article>
+             hasta </article>), quite las marcas de comentario que lo rodean,
+             llene los datos y BORRE el recuadro "vacio" que está al final.
+
+        <article class="tarjeta curso">
+          <p class="tipo">Obligatorio · En línea</p>
+          <h3>Nombre del curso</h3>
+          <p>Descripción breve del propósito del curso.</p>
+          <dl>
+            <dt>Dirigido a</dt><dd>Personal de enfermería</dd>
+            <dt>Duración</dt><dd>20 horas</dd>
+            <dt>Periodo</dt><dd>Enero – marzo 2027</dd>
+          </dl>
+          <div class="acciones">
+            <a class="btn btn-primario" href="../cursos/nombre-del-curso/index.html">Ingresar al curso</a>
+            <a class="btn btn-secundario" href="../documentos/nombre-del-curso.pdf">Descargar material</a>
+          </div>
+        </article>
+        ============================================================ -->
+
+      </div>
+
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="contenedor">
+    <span><b>Jefatura de Enseñanza</b> · Hospital Tonalá Centro · SESAT</span>
+    <span>Tonalá, Jalisco · <span id="anio">2026</span></span>
+  </div>
+</footer>
+
+<script>
+  (function(){
+    var boton = document.querySelector('.boton-menu');
+    var menu = document.getElementById('menu');
+    boton.addEventListener('click', function(){
+      var abierto = menu.classList.toggle('abierto');
+      boton.setAttribute('aria-expanded', abierto ? 'true' : 'false');
+    });
+    document.getElementById('anio').textContent = new Date().getFullYear();
+  })();
+</script>
+</body>
+</html>
