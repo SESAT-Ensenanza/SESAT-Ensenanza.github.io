@@ -24,12 +24,35 @@ Buscar en `index.html` el texto `EDITAR` y los recuadros marcados como **Por con
 - Enlace al portal de verificación de constancias: confirmar que GitHub Pages esté activo
   en el repositorio `constancias` (o trasladar ese portal a esta organización y actualizar el enlace).
 
-## Estructura
+## Estructura del repositorio
+
+```
+index.html                         Página principal
+assets/
+  estilos.css                      Diseño compartido por todas las páginas
+educacion-continua/
+  cursos-obligatorios.html         Subpágina: cursos obligatorios
+  cursos-especializados.html       Subpágina: cursos especializados
+```
+
+Todas las páginas usan `assets/estilos.css`; si se omite ese archivo, el sitio se ve sin diseño.
+
+## Agregar un curso
+
+En `cursos-obligatorios.html` o `cursos-especializados.html` hay una ficha de ejemplo dentro de un
+comentario (buscar `PARA AGREGAR UN CURSO`). Copiarla, quitar las marcas de comentario, llenar los
+datos y borrar el recuadro "Sin cursos publicados".
+
+- Cursos interactivos en HTML: carpeta `cursos/nombre-del-curso/index.html`.
+- Materiales en PDF: carpeta `documentos/`.
+- Nombres de archivo en minúsculas, sin acentos, sin ñ y sin espacios (usar guiones).
+
+## Secciones de la página principal
 
 | Sección | Contenido |
 |---|---|
 | Portada | Identidad institucional y ejes: formación, capacitación, investigación |
-| Programas | Internado, servicio social, campo clínico, prácticas profesionales, educación continua, investigación |
+| Programas | Internado, servicio social, campo clínico, prácticas profesionales, educación continua (con enlaces a cursos obligatorios y especializados), investigación |
 | Congreso | I Congreso de Ciencias de la Salud (CTO2026) y verificación de constancias |
 | Servicios en línea | Verificación de constancias (pública); asistencia QR y gestión de alumnos (uso interno) |
 | Contacto | Ubicación y medios de contacto |
