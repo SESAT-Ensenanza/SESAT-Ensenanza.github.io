@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Jefatura de Enseñanza · Hospital Tonalá Centro</title>
+<meta name="description" content="Jefatura de Enseñanza del Hospital Tonalá Centro (SESAT): programas académicos, campos clínicos, educación continua, investigación y servicios en línea.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&display=swap">
+<style>
+  /* ============================================================
+     SISTEMA VISUAL HTC-SESAT (mismo del portal de constancias)
+     ============================================================ */
+  :root{
+    color-scheme:light dark;
+    --fondo:#F5F3EE; --superficie:#FFFFFF; --superficie-2:#FBFAF6;
+    --tinta:#101A2E; --tenue:#5D6879; --linea:#DCD8CF; --linea-fuerte:#C3BEB1;
+    --azul:#023375; --azul-suave:#E6ECF6; --cielo:#61C1E9; --dorado:#9E7C2B;
+    --pendiente:#A0242C; --pendiente-fondo:#FAEDEC;
+    --sombra:0 1px 2px rgba(16,26,46,.06), 0 8px 24px -16px rgba(2,51,117,.25);
+    --serif:"Source Serif 4", Georgia, "Times New Roman", serif;
+    --sans:"IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+    --mono:"IBM Plex Mono", ui-monospace, Menlo, monospace;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --fondo:#0B1020; --superficie:#141C2E; --superficie-2:#182135;
+      --tinta:#E8EDF7; --tenue:#94A1B9; --linea:#2A3550; --linea-fuerte:#3B4868;
+      --azul:#86B0EE; --azul-suave:#1B2A46; --dorado:#D3AE5E;
+      --pendiente:#F08B93; --pendiente-fondo:#341418;
+      --sombra:0 1px 2px rgba(0,0,0,.4), 0 12px 30px -18px rgba(0,0,0,.8);
+    }
+  }
+  :root[data-theme="dark"]{
+    --fondo:#0B1020; --superficie:#141C2E; --superficie-2:#182135;
+    --tinta:#E8EDF7; --tenue:#94A1B9; --linea:#2A3550; --linea-fuerte:#3B4868;
+    --azul:#86B0EE; --azul-suave:#1B2A46; --dorado:#D3AE5E;
+    --pendiente:#F08B93; --pendiente-fondo:#341418;
+    --sombra:0 1px 2px rgba(0,0,0,.4), 0 12px 30px -18px rgba(0,0,0,.8);
+  }
+
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth; scroll-padding-top:72px}
+  body{margin:0; background:var(--fondo); color:var(--tinta); font-family:var(--sans);
+       font-size:16px; line-height:1.6; -webkit-font-smoothing:antialiased}
+  a{color:var(--azul)}
+  img{max-width:100%}
+  .contenedor{max-width:1080px; margin:0 auto; padding-inline:20px}
+  .regla-superior{height:4px; background:var(--dorado)}
+
+  /* ---------- Barra de navegación ---------- */
+  .barra{position:sticky; top:0; z-index:10; background:color-mix(in srgb, var(--fondo) 92%, transparent);
+         backdrop-filter:blur(8px); border-bottom:1px solid var(--linea)}
+  .barra .contenedor{display:flex; align-items:center; justify-content:space-between; gap:16px; min-height:60px}
+  .marca{display:flex; flex-direction:column; text-decoration:none; color:var(--tinta); line-height:1.2}
+  .marca b{font-size:11px; letter-spacing:.16em; text-transform:uppercase; color:var(--azul)}
+  .marca span{font-family:var(--serif); font-weight:600; font-size:17px}
+  nav.menu{display:flex; gap:4px; flex-wrap:wrap}
+  nav.menu a{text-decoration:none; color:var(--tenue); font-size:14px; font-weight:500; padding:8px 10px; border-radius:6px}
+  nav.menu a:hover{color:var(--azul); background:var(--azul-suave)}
+  .boton-menu{display:none; background:none; border:1px solid var(--linea-fuerte); color:var(--tinta);
+              border-radius:6px; padding:6px 10px; font:inherit; font-size:14px; cursor:pointer}
+  @media (max-width:760px){
+    .boton-menu{display:block}
+    nav.menu{display:none; position:absolute; top:100%; left:0; right:0; flex-direction:column;
+             background:var(--superficie); border-bottom:1px solid var(--linea); padding:8px 20px 14px}
+    nav.menu.abierto{display:flex}
+  }
+
+  /* ---------- Portada ---------- */
+  .portada{padding-block:64px 56px; border-bottom:1px solid var(--linea)}
+  .institucion{font-size:12px; font-weight:600; letter-spacing:.16em; text-transform:uppercase; color:var(--azul); margin:0}
+  .opd{font-size:13px; color:var(--tenue); margin:6px 0 0}
+  .portada h1{font-family:var(--serif); font-weight:700; font-size:clamp(34px, 7vw, 54px); line-height:1.08;
+              margin:22px 0 0; text-wrap:balance}
+  .portada .bajada{font-size:clamp(17px, 2.4vw, 19px); color:var(--tenue); max-width:640px; margin:18px 0 0}
+  .acciones{display:flex; flex-wrap:wrap; gap:10px; margin-top:30px}
+  .btn{display:inline-flex; align-items:center; gap:8px; padding:11px 18px; border-radius:8px; font-weight:600;
+       font-size:15px; text-decoration:none; border:1px solid transparent}
+  .btn-primario{background:var(--azul); color:var(--fondo)}
+  .btn-secundario{border-color:var(--linea-fuerte); color:var(--tinta); background:var(--superficie)}
+  .btn:hover{filter:brightness(1.08)}
+
+  .ejes{display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:var(--linea);
+        border:1px solid var(--linea); border-radius:10px; overflow:hidden; margin-top:44px}
+  .eje{background:var(--superficie); padding:18px 20px}
+  .eje b{display:block; font-family:var(--serif); font-size:18px}
+  .eje span{font-size:14px; color:var(--tenue)}
+  @media (max-width:640px){ .ejes{grid-template-columns:1fr} }
+
+  /* ---------- Secciones ---------- */
+  section.bloque{padding-block:64px; border-bottom:1px solid var(--linea)}
+  .encabezado{max-width:680px; margin-bottom:32px}
+  .rotulo{font-family:var(--mono); font-size:12px; letter-spacing:.08em; text-transform:uppercase; color:var(--dorado); margin:0}
+  h2{font-family:var(--serif); font-weight:700; font-size:clamp(26px, 4.5vw, 34px); line-height:1.15; margin:8px 0 0}
+  .encabezado p{color:var(--tenue); margin:12px 0 0}
+
+  .rejilla{display:grid; grid-template-columns:repeat(auto-fill, minmax(min(100%, 300px), 1fr)); gap:16px}
+  .tarjeta{background:var(--superficie); border:1px solid var(--linea); border-radius:10px; padding:22px;
+           box-shadow:var(--sombra); display:flex; flex-direction:column}
+  .tarjeta h3{font-family:var(--serif); font-size:20px; margin:0; line-height:1.25}
+  .tarjeta p{color:var(--tenue); font-size:15px; margin:10px 0 0}
+  .tarjeta .dirigido{margin-top:auto; padding-top:16px; font-size:13px; color:var(--tinta)}
+  .tarjeta .dirigido b{color:var(--azul); font-weight:600}
+  .icono{width:40px; height:40px; border-radius:8px; background:var(--azul-suave); color:var(--azul);
+         display:grid; place-items:center; margin-bottom:16px}
+  .icono svg{width:22px; height:22px}
+
+  /* ---------- Congreso ---------- */
+  .congreso{display:grid; grid-template-columns:1.3fr 1fr; gap:28px; align-items:start;
+            background:var(--superficie); border:1px solid var(--linea); border-top:4px solid var(--dorado);
+            border-radius:10px; padding:32px; box-shadow:var(--sombra)}
+  .congreso h3{font-family:var(--serif); font-size:clamp(22px, 3.6vw, 28px); margin:6px 0 0; line-height:1.2}
+  .lema{font-family:var(--serif); font-style:italic; color:var(--dorado); font-size:17px; margin:8px 0 0}
+  .datos{list-style:none; padding:0; margin:0; display:grid; gap:12px}
+  .datos li{display:grid; grid-template-columns:110px 1fr; gap:10px; font-size:15px;
+            padding-bottom:12px; border-bottom:1px dashed var(--linea)}
+  .datos li:last-child{border-bottom:0}
+  .datos span{color:var(--tenue); font-size:13px; text-transform:uppercase; letter-spacing:.06em; padding-top:2px}
+  @media (max-width:760px){ .congreso{grid-template-columns:1fr; padding:24px} }
+
+  /* ---------- Servicios en línea ---------- */
+  .servicio{display:flex; gap:16px; align-items:flex-start; text-decoration:none; color:inherit}
+  a.servicio:hover h3{color:var(--azul); text-decoration:underline}
+  .etiqueta{display:inline-block; font-size:11.5px; font-weight:600; letter-spacing:.04em; padding:3px 8px;
+            border-radius:999px; background:var(--azul-suave); color:var(--azul); margin-top:12px}
+  .etiqueta.interna{background:var(--superficie-2); color:var(--tenue); border:1px solid var(--linea)}
+
+  /* ---------- Contacto ---------- */
+  .contacto{display:grid; grid-template-columns:repeat(auto-fit, minmax(min(100%, 230px), 1fr)); gap:16px}
+  .contacto dt{font-size:12px; text-transform:uppercase; letter-spacing:.08em; color:var(--tenue)}
+  .contacto dd{margin:6px 0 0; font-size:16px}
+
+  /* Marcador de datos por confirmar: retirar la clase al capturar el dato real */
+  .pendiente{background:var(--pendiente-fondo); color:var(--pendiente); border:1px dashed currentColor;
+             border-radius:4px; padding:0 6px; font-size:.92em}
+
+  /* ---------- Pie ---------- */
+  footer{padding-block:36px 48px; font-size:14px; color:var(--tenue)}
+  footer .contenedor{display:flex; flex-wrap:wrap; justify-content:space-between; gap:12px}
+  footer b{color:var(--tinta)}
+</style>
+</head>
+<body>
+<div class="regla-superior"></div>
+
+<!-- =================== NAVEGACIÓN =================== -->
+<header class="barra">
+  <div class="contenedor">
+    <a class="marca" href="#inicio">
+      <b>Hospital Tonalá Centro</b>
+      <span>Jefatura de Enseñanza</span>
+    </a>
+    <button class="boton-menu" aria-expanded="false" aria-controls="menu">Menú</button>
+    <nav class="menu" id="menu">
+      <a href="#programas">Programas</a>
+      <a href="#congreso">Congreso</a>
+      <a href="#servicios">Servicios en línea</a>
+      <a href="#contacto">Contacto</a>
+    </nav>
+  </div>
+</header>
+
+<main id="inicio">
+  <!-- =================== PORTADA =================== -->
+  <section class="portada">
+    <div class="contenedor">
+      <p class="institucion">Hospital Tonalá Centro</p>
+      <p class="opd">SESAT · Servicios de Salud Tonalá — Organismo Público Descentralizado</p>
+      <h1>Jefatura de Enseñanza</h1>
+      <p class="bajada">Coordinación de la formación de recursos humanos para la salud, la educación continua del personal y el impulso a la investigación en el Hospital Tonalá Centro.</p>
+      <div class="acciones">
+        <a class="btn btn-primario" href="#programas">Programas académicos</a>
+        <a class="btn btn-secundario" href="#servicios">Verificar una constancia</a>
+      </div>
+
+      <div class="ejes">
+        <div class="eje"><b>Formación</b><span>Internado, servicio social, campo clínico y prácticas profesionales</span></div>
+        <div class="eje"><b>Capacitación</b><span>Educación continua para el personal del hospital</span></div>
+        <div class="eje"><b>Investigación</b><span>Asesoría y seguimiento de protocolos</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =================== PROGRAMAS =================== -->
+  <section class="bloque" id="programas">
+    <div class="contenedor">
+      <div class="encabezado">
+        <p class="rotulo">01 · Programas</p>
+        <h2>Programas académicos y campos clínicos</h2>
+        <p>La Jefatura de Enseñanza coordina la incorporación, la rotación por servicios y el seguimiento de las y los estudiantes que realizan su formación en el hospital, en vinculación con sus instituciones educativas.</p>
+      </div>
+
+      <div class="rejilla">
+        <article class="tarjeta">
+          <div class="icono"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v18M3 12h18"/></svg></div>
+          <h3>Internado de pregrado</h3>
+          <p>Rotación clínica por los servicios del hospital como parte del último ciclo de la formación profesional.</p>
+          <p class="dirigido"><b>Dirigido a:</b> médicas y médicos internos de pregrado.</p>
+        </article>
+
+        <article class="tarjeta">
+          <div class="icono"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20h16M6 20V9l6-5 6 5v11M10 20v-6h4v6"/></svg></div>
+          <h3>Servicio social</h3>
+          <p>Prestación del servicio social con asignación de áreas, supervisión de actividades y control de asistencia.</p>
+          <p class="dirigido"><b>Dirigido a:</b> pasantes de las carreras del área de la salud.</p>
+        </article>
+
+        <article class="tarjeta">
+          <div class="icono"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 4h6v4H9zM7 6H5v14h14V6h-2M9 13h6M9 17h4"/></svg></div>
+          <h3>Campo clínico</h3>
+          <p>Prácticas clínicas supervisadas con tutoría de campo, de acuerdo con el programa de la institución educativa de procedencia.</p>
+          <p class="dirigido"><b>Dirigido a:</b> estudiantes de enfermería y otras carreras de la salud.</p>
+        </article>
+
+        <article class="tarjeta">
+          <div class="icono"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg></div>
+          <h3>Prácticas profesionales</h3>
+          <p>Desarrollo de competencias profesionales en áreas clínicas, administrativas y de apoyo del hospital.</p>
+          <p class="dirigido"><b>Dirigido a:</b> estudiantes de nivel técnico y licenciatura.</p>
+        </article>
+
+        <article class="tarjeta">
+          <div class="icono"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7l9-4 9 4-9 4-9-4z"/><path d="M7 9v5c0 1.5 2.2 3 5 3s5-1.5 5-3V9"/></svg></div>
+          <h3>Educación continua</h3>
+          <p>Cursos, sesiones académicas, talleres y capacitación en servicio para la actualización del personal.</p>
+          <p class="dirigido"><b>Dirigido a:</b> personal médico, de enfermería, trabajo social y áreas de apoyo.</p>
+        </article>
+
+        <article class="tarjeta">
+          <div class="icono"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="6"/><path d="M20 20l-4.5-4.5"/></svg></div>
+          <h3>Investigación</h3>
+          <p>Orientación metodológica para la elaboración y el seguimiento de protocolos y trabajos de investigación.</p>
+          <p class="dirigido"><b>Dirigido a:</b> personal del hospital y estudiantes en formación.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- =================== CONGRESO =================== -->
+  <section class="bloque" id="congreso">
+    <div class="contenedor">
+      <div class="encabezado">
+        <p class="rotulo">02 · Eventos académicos</p>
+        <h2>Congreso de Ciencias de la Salud</h2>
+      </div>
+
+      <div class="congreso">
+        <div>
+          <p class="rotulo">Edición 2026 · CTO2026</p>
+          <h3>I Congreso de Ciencias de la Salud del Hospital Tonalá Centro</h3>
+          <p class="lema">“La salud, la cuidamos todos”</p>
+          <p style="color:var(--tenue); margin-top:14px">Organizado con motivo del primer aniversario del hospital, con ponencias de Medicina, Enfermería, Trabajo Social y Hemodiálisis, además de exposición de carteles de investigación, casos clínicos y proyectos académicos.</p>
+          <div class="acciones" style="margin-top:20px">
+            <!-- EDITAR: confirme que GitHub Pages esté activo en el repositorio "constancias" -->
+            <a class="btn btn-primario" href="https://cristianquezadaes-dotcom.github.io/constancias/portal-verificacion-cto2026.html">Verificar constancia</a>
+          </div>
+        </div>
+        <ul class="datos">
+          <li><span>Fechas</span><div>7 y 8 de octubre de 2026</div></li>
+          <li><span>Horario</span><div>08:00 a 15:00 h</div></li>
+          <li><span>Ejes</span><div>Medicina · Enfermería · Trabajo Social · Hemodiálisis</div></li>
+          <li><span>Trabajos</span><div>Carteles de investigación, caso clínico y proyecto académico o de innovación</div></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- =================== SERVICIOS EN LÍNEA =================== -->
+  <section class="bloque" id="servicios">
+    <div class="contenedor">
+      <div class="encabezado">
+        <p class="rotulo">03 · Servicios en línea</p>
+        <h2>Herramientas de la Jefatura</h2>
+        <p>Sistemas digitales para la gestión académica. Las herramientas marcadas como de uso interno están reservadas al personal de la Jefatura de Enseñanza.</p>
+      </div>
+
+      <div class="rejilla">
+        <!-- EDITAR: confirme que GitHub Pages esté activo en el repositorio "constancias" -->
+        <a class="tarjeta servicio" href="https://cristianquezadaes-dotcom.github.io/constancias/portal-verificacion-cto2026.html">
+          <div class="icono" style="flex:none; margin:0"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 3v6c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6l7-3z"/><path d="M9 12l2 2 4-4"/></svg></div>
+          <div>
+            <h3>Verificación de constancias</h3>
+            <p>Consulta de la autenticidad de constancias emitidas por la Jefatura mediante folio.</p>
+            <span class="etiqueta">Acceso público</span>
+          </div>
+        </a>
+
+        <div class="tarjeta servicio">
+          <div class="icono" style="flex:none; margin:0"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><path d="M14 14h3v3h-3zM20 14v.01M14 20h.01M17 20h4v-3"/></svg></div>
+          <div>
+            <h3>Registro de asistencia QR</h3>
+            <p>Captura de asistencia a sesiones y eventos académicos mediante escaneo de códigos QR.</p>
+            <span class="etiqueta interna">Uso interno</span>
+          </div>
+        </div>
+
+        <div class="tarjeta servicio">
+          <div class="icono" style="flex:none; margin:0"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.5"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6M16 4.5a3.5 3.5 0 0 1 0 7M21 20c0-2.6-1.6-4.8-4-5.6"/></svg></div>
+          <div>
+            <h3>Gestión de alumnos</h3>
+            <p>Control de estudiantes en rotación, asistencias, fechas de término y emisión de documentos.</p>
+            <span class="etiqueta interna">Uso interno</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =================== CONTACTO =================== -->
+  <section class="bloque" id="contacto">
+    <div class="contenedor">
+      <div class="encabezado">
+        <p class="rotulo">04 · Contacto</p>
+        <h2>Jefatura de Enseñanza</h2>
+        <p>Para trámites de campo clínico, servicio social o prácticas profesionales, la institución educativa debe dirigir su solicitud a la Jefatura de Enseñanza.</p>
+      </div>
+
+      <!-- EDITAR: sustituya cada dato marcado como pendiente y elimine la clase "pendiente" -->
+      <dl class="contacto tarjeta">
+        <div><dt>Ubicación</dt><dd>Hospital Tonalá Centro<br>Tonalá, Jalisco</dd></div>
+        <div><dt>Horario de atención</dt><dd><span class="pendiente">Por confirmar</span></dd></div>
+        <div><dt>Correo electrónico</dt><dd><span class="pendiente">Por confirmar</span></dd></div>
+        <div><dt>Teléfono / extensión</dt><dd><span class="pendiente">Por confirmar</span></dd></div>
+      </dl>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="contenedor">
+    <span><b>Jefatura de Enseñanza</b> · Hospital Tonalá Centro · SESAT</span>
+    <span>Tonalá, Jalisco · <span id="anio">2026</span></span>
+  </div>
+</footer>
+
+<script>
+  // Menú en pantallas pequeñas
+  (function(){
+    var boton = document.querySelector('.boton-menu');
+    var menu = document.getElementById('menu');
+    boton.addEventListener('click', function(){
+      var abierto = menu.classList.toggle('abierto');
+      boton.setAttribute('aria-expanded', abierto ? 'true' : 'false');
+    });
+    menu.addEventListener('click', function(e){
+      if (e.target.tagName === 'A'){ menu.classList.remove('abierto'); boton.setAttribute('aria-expanded','false'); }
+    });
+    document.getElementById('anio').textContent = new Date().getFullYear();
+  })();
+</script>
+</body>
+</html>
