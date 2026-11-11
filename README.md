@@ -30,15 +30,33 @@ Buscar en `index.html` el texto `EDITAR` y los recuadros marcados como **Por con
 index.html                         Página principal
 assets/
   estilos.css                      Diseño compartido por todas las páginas
+  config.js                        Enlace para subir evidencias (editar aquí)
 educacion-continua/
   cursos-obligatorios.html         Subpágina: cursos obligatorios
   cursos-especializados.html       Subpágina: cursos especializados
 cursos/
+  induccion/
+    index.html                     Curso CV-OBL-001 · Inducción institucional
   aesp/
     index.html                     Curso CV-OBL-002 · Acciones Esenciales para la Seguridad del Paciente
 ```
 
 Todas las páginas usan `assets/estilos.css`; si se omite ese archivo, el sitio se ve sin diseño.
+
+## Enlace para subir evidencias
+
+Los botones **Subir evidencia** de Cursos obligatorios y Cursos especializados toman su enlace de
+`assets/config.js`. Mientras esté vacío, el botón muestra "Enlace en configuración".
+
+1. Iniciar sesión en Google con **hospitaltonalacentro5@gmail.com** y crear un formulario en forms.google.com.
+2. Agregar preguntas: nombre completo, número de empleado, servicio, curso (lista desplegable) y una
+   pregunta de tipo **Subir archivo** (permitir PDF e imágenes).
+3. Clic en **Enviar** → ícono de enlace → **Copiar**.
+4. En GitHub, abrir `assets/config.js`, clic en el lápiz, pegar el enlace entre las comillas de
+   `enlaceEvidencias: ""` y **Commit changes**.
+
+Los archivos quedan en el Google Drive de esa cuenta, en una carpeta con el nombre del formulario,
+y las respuestas se pueden ver en una hoja de cálculo.
 
 ## Agregar un curso
 
