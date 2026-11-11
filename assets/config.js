@@ -9,7 +9,7 @@
    Los archivos se guardarán en el Google Drive de esa cuenta.
    ============================================================ */
 window.SITIO = {
-  enlaceEvidencias: ""
+  enlaceEvidencias: "https://forms.gle/ysuVN8nEKpSXa4qAA"
 };
 
 /* No es necesario modificar lo siguiente */
