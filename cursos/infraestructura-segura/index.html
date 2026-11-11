@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Infraestructura segura · CV-OBL-007</title>
+<!-- CV-OBL-007 Infraestructura segura y seguridad en el trabajo — Hospital Tonalá Centro, SESAT.
+     Archivo único (HTML + CSS + JavaScript), funciona sin servidor.
+     Para editar textos: constantes CURSO, MODULOS, EVALUACION y LISTA. -->
+<style>
+/* Cursos virtuales sencillos HTC-SESAT — estilos, fondo claro */
+:root {
+  color-scheme: light;
+  --azul: #1F4E79; --azul2: #2D6CA3; --turq: #14A3A6; --turq-cl: #E3F5F5;
+  --verde: #2E9D5B; --verde-cl: #E6F5EC; --rojo: #B83227; --rojo-cl: #FBEAE8;
+  --ambar-cl: #FFF5E0; --fondo: #F4F7FA; --borde: #D9E2EA; --texto: #1B2733; --tenue: #536373;
+}
+* { box-sizing: border-box; }
+html { font-size: 18px; background: var(--fondo); }
+body { margin: 0; background: var(--fondo); color: var(--texto); font-family: "Segoe UI", system-ui, -apple-system, Roboto, Arial, sans-serif; line-height: 1.6; }
+button, input, select { font: inherit; color: inherit; }
+.oculto { display: none !important; }
+:focus-visible { outline: 3px solid var(--turq); outline-offset: 2px; }
+
+header.barra { background: #fff; border-bottom: 1px solid var(--borde); position: sticky; top: 0; z-index: 10; }
+.barra-in { max-width: 900px; margin: 0 auto; padding: .6rem 1rem; display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; }
+.marca { font-weight: 800; color: var(--azul); line-height: 1.2; }
+.marca small { display: block; font-weight: 600; color: var(--tenue); font-size: .72rem; }
+.prog { flex: 1 1 200px; }
+.prog .t { font-size: .75rem; color: var(--tenue); font-weight: 600; }
+.pbar { height: 10px; background: #E5ECF2; border-radius: 99px; overflow: hidden; }
+.pbar span { display: block; height: 100%; width: 0; background: linear-gradient(90deg, var(--turq), var(--verde)); transition: width .5s; }
+
+main { max-width: 900px; margin: 0 auto; padding: 1.4rem 1rem 3rem; }
+.card { background: #fff; border: 1px solid var(--borde); border-radius: 14px; padding: 1.5rem; box-shadow: 0 2px 10px rgba(16,42,67,.06); }
+.card + .card { margin-top: 1rem; }
+h1, h2, h3 { color: var(--azul); line-height: 1.25; margin: 0 0 .6rem; }
+h1 { font-size: 1.9rem; } h2 { font-size: 1.4rem; } h3 { font-size: 1.12rem; }
+p { margin: 0 0 .8rem; }
+.kicker { text-transform: uppercase; letter-spacing: .08em; font-size: .75rem; font-weight: 800; color: var(--turq); margin-bottom: .2rem; }
+.tenue { color: var(--tenue); }
+ul.lst { margin: 0 0 .9rem; padding-left: 1.3rem; } ul.lst li { margin-bottom: .4rem; }
+
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: .4rem; border: 0; border-radius: 12px; padding: .75rem 1.3rem; font-weight: 700; cursor: pointer; min-height: 48px; font-size: 1rem; }
+.btn-p { background: var(--azul); color: #fff; } .btn-p:hover { background: #183F63; }
+.btn-s { background: #fff; color: var(--azul); border: 2px solid var(--azul); } .btn-s:hover { background: var(--fondo); }
+.btn-v { background: var(--verde); color: #fff; }
+.btn-x { background: #fff; color: var(--rojo); border: 2px solid #E7B5AF; }
+.btn[disabled] { opacity: .45; cursor: not-allowed; }
+.acc { display: flex; gap: .7rem; flex-wrap: wrap; margin-top: 1.2rem; align-items: center; }
+.acc .der { margin-left: auto; }
+
+label { display: block; font-weight: 700; color: var(--azul); margin: .7rem 0 .3rem; }
+input[type=text], select { width: 100%; border: 2px solid var(--borde); border-radius: 10px; padding: .7rem .85rem; background: #fff; color: var(--texto); -webkit-text-fill-color: var(--texto); }
+input[type=text]:focus, select:focus { border-color: var(--turq); outline: none; }
+input::placeholder { color: #8A99A8; -webkit-text-fill-color: #8A99A8; }
+.campos { display: grid; grid-template-columns: 1fr 1fr; gap: 0 1rem; }
+.aviso { font-size: .85rem; color: var(--tenue); margin-top: .5rem; }
+.error { color: var(--rojo); font-weight: 600; font-size: .9rem; min-height: 1.2rem; margin-top: .4rem; }
+
+.mods { display: grid; gap: .8rem; }
+.mod { display: flex; gap: 1rem; align-items: center; background: #fff; border: 1px solid var(--borde); border-radius: 14px; padding: 1rem 1.1rem; }
+.mod .n { width: 48px; height: 48px; border-radius: 50%; display: grid; place-items: center; font-weight: 800; font-size: 1.2rem; background: var(--turq-cl); color: #0E5A6B; flex: none; }
+.mod.hecho .n { background: var(--verde); color: #fff; }
+.mod.bloq { opacity: .6; }
+.mod .info { flex: 1; min-width: 0; }
+.mod .info b { display: block; color: var(--azul); font-size: 1.05rem; }
+.mod .info small { color: var(--tenue); }
+.estado { display: inline-block; font-size: .78rem; font-weight: 700; border-radius: 99px; padding: .1rem .6rem; margin-top: .2rem; }
+.e-ok { background: var(--verde-cl); color: #1E6B3E; } .e-cur { background: var(--ambar-cl); color: #7A4F0E; } .e-no { background: #EEF1F4; color: #5B6B7A; }
+
+.paso { font-size: .85rem; color: var(--tenue); font-weight: 600; }
+table.t { width: 100%; border-collapse: collapse; margin: .2rem 0 1rem; font-size: .95rem; }
+table.t th { background: var(--azul); color: #fff; text-align: left; padding: .5rem .7rem; }
+table.t td { padding: .5rem .7rem; border-bottom: 1px solid var(--borde); vertical-align: top; }
+table.t tr:nth-child(even) td { background: #F8FAFC; }
+.nota, .alerta, .pend { border-radius: 10px; padding: .8rem 1rem; margin: .4rem 0 1rem; border-left: 5px solid; }
+.nota { background: var(--turq-cl); border-color: var(--turq); }
+.alerta { background: var(--rojo-cl); border-color: var(--rojo); }
+.pend { background: var(--ambar-cl); border-color: #D69E2E; font-size: .9rem; }
+.pend b:first-child { color: #7A4F0E; }
+
+.preg { font-size: 1.12rem; font-weight: 700; margin-bottom: .9rem; }
+.ops { display: grid; gap: .6rem; }
+.op { text-align: left; display: flex; gap: .7rem; align-items: flex-start; background: #fff; border: 2px solid var(--borde); border-radius: 12px; padding: .75rem .9rem; cursor: pointer; min-height: 50px; }
+.op:hover:not([disabled]) { border-color: var(--turq); }
+.op .l { width: 28px; height: 28px; border-radius: 7px; background: var(--fondo); color: var(--azul); display: grid; place-items: center; font-weight: 800; flex: none; font-size: .88rem; }
+.op.sel { border-color: var(--azul); background: #F1F6FB; } .op.sel .l { background: var(--azul); color: #fff; }
+.op.bien { border-color: var(--verde); background: var(--verde-cl); } .op.bien .l { background: var(--verde); color: #fff; }
+.op.mal { border-color: var(--rojo); background: var(--rojo-cl); } .op.mal .l { background: var(--rojo); color: #fff; }
+.op[disabled] { cursor: default; }
+.fb { margin-top: 1rem; border-radius: 12px; padding: .9rem 1rem; }
+.fb.ok { background: var(--verde-cl); color: #1E5233; } .fb.no { background: var(--rojo-cl); color: #6E1F17; }
+.evq { border-top: 1px solid var(--borde); padding-top: 1.1rem; margin-top: 1.1rem; }
+.evq:first-of-type { border-top: 0; margin-top: 0; padding-top: 0; }
+.resultado { text-align: center; padding: 1rem 0; }
+.resultado .cal { font-size: 3rem; font-weight: 800; line-height: 1; }
+.cal.ok { color: var(--verde); } .cal.no { color: var(--rojo); }
+
+ol.pasos { counter-reset: p; list-style: none; margin: 0 0 1rem; padding: 0; }
+ol.pasos li { counter-increment: p; position: relative; padding: .55rem .7rem .55rem 3rem; border-bottom: 1px solid var(--borde); }
+ol.pasos li::before { content: counter(p); position: absolute; left: .4rem; top: .45rem; width: 1.9rem; height: 1.9rem; border-radius: 50%; background: var(--turq-cl); color: #0E5A6B; font-weight: 800; display: grid; place-items: center; font-size: .9rem; }
+.reloj { display: flex; gap: 1rem; align-items: center; justify-content: space-between; flex-wrap: wrap; background: #F1F6FB; border: 2px dashed #9DB8D3; border-radius: 12px; padding: .9rem 1rem; margin: .4rem 0 1rem; }
+.reloj > div:first-child { flex: 1 1 260px; font-size: .95rem; }
+.reloj-c { display: flex; align-items: center; gap: .8rem; }
+.reloj .seg { font-size: 1.8rem; font-weight: 800; color: var(--azul); min-width: 4.5rem; text-align: center; font-variant-numeric: tabular-nums; }
+.reloj.corre { border-color: var(--turq); background: var(--turq-cl); }
+.reloj.fin { border-color: var(--verde); background: var(--verde-cl); } .reloj.fin .seg { color: var(--verde); font-size: 1.3rem; }
+
+/* constancia */
+.comp h1 { font-size: 1.5rem; text-align: center; }
+.comp .inst { text-align: center; color: var(--tenue); margin-bottom: 1rem; }
+.chk { display: flex; gap: .6rem; align-items: flex-start; padding: .3rem 0; border-bottom: 1px dashed var(--borde); font-size: .95rem; }
+.chk .c { width: 18px; height: 18px; border: 2px solid #7F8C99; border-radius: 4px; flex: none; margin-top: .2rem; }
+.firmas { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.2rem; margin-top: 2.5rem; text-align: center; font-size: .85rem; }
+.firmas div { border-top: 1px solid #555; padding-top: .3rem; }
+
+footer { text-align: center; color: var(--tenue); font-size: .8rem; padding: 1rem; }
+.toast { position: fixed; left: 50%; bottom: 1.2rem; transform: translateX(-50%); background: var(--azul); color: #fff; padding: .7rem 1.1rem; border-radius: 10px; z-index: 30; box-shadow: 0 6px 20px rgba(0,0,0,.18); max-width: 90vw; }
+.velo { position: fixed; inset: 0; background: rgba(16,32,48,.45); display: grid; place-items: center; padding: 1rem; z-index: 40; }
+.modal { background: #fff; border-radius: 14px; padding: 1.4rem; max-width: 520px; width: 100%; }
+
+@media (max-width: 640px) {
+  html { font-size: 17px; }
+  .card { padding: 1.1rem; }
+  .campos { grid-template-columns: 1fr; }
+  .acc .btn { flex: 1 1 auto; } .acc .der { margin-left: 0; }
+  h1 { font-size: 1.55rem; }
+  .firmas { grid-template-columns: 1fr; gap: 2rem; }
+  table.t { font-size: .88rem; }
+  table.t td { overflow-wrap: anywhere; }
+  table.t3 thead { display: none; }
+  table.t3, table.t3 tbody, table.t3 tr, table.t3 td { display: block; width: 100%; }
+  table.t3 tr { border: 1px solid var(--borde); border-radius: 10px; margin-bottom: .7rem; overflow: hidden; }
+  table.t3 td { border-bottom: 1px solid var(--borde); background: #fff !important; }
+  table.t3 td:first-child { background: #F1F6FB !important; }
+  table.t3 td:last-child { border-bottom: 0; }
+  table.t3 td:not(:first-child)::before { content: attr(data-h); display: block; font-size: .72rem; font-weight: 800; text-transform: uppercase; letter-spacing: .05em; color: var(--tenue); }
+}
+@media print {
+  html, body { background: #fff; font-size: 11pt; }
+  header.barra, footer, .no-imp, .toast, .reloj { display: none !important; }
+  main { padding: 0; max-width: none; }
+  .card { border: 0; box-shadow: none; padding: 0; }
+  table.t th { background: #1F4E79 !important; color: #fff !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+}
+
+</style>
+</head>
+<body>
+<header class="barra oculto" id="barra"><div class="barra-in">
+  <div class="marca">Infraestructura y seguridad en el trabajo<small>CV-OBL-007 · Hospital Tonalá Centro, SESAT</small></div>
+  <div class="prog"><div class="t" id="ptxt"></div><div class="pbar" role="progressbar" aria-label="Avance del curso" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><span id="pbar"></span></div></div>
+</div></header>
+<main id="app"></main>
+<input type="file" id="archivo" accept=".json,application/json" hidden>
+<footer>HTC-SESAT-ENS-CV-OBL-007-V1 · Jefatura de Enseñanza e Investigación · Hospital Tonalá Centro, SESAT</footer>
+<script>
+/* ==========================================================================
+   CONTENIDO — CV-OBL-007 Seguridad de la infraestructura y salud y
+   seguridad en el trabajo
+   Fuente única para el curso HTML y para el documento de sustento (.docx).
+   Bloques de cada página: ["p", texto] · ["lista", [..]] · ["pasos", [..]]
+   · ["tabla", [encabezados], [[filas]]] · ["nota", texto] · ["alerta", texto]
+   · ["pendiente", texto] · ["reloj", segundos, texto]
+   Preguntas: la PRIMERA opción es la correcta (el curso las baraja al mostrarlas).
+   El texto admite **negritas**.
+   ========================================================================== */
+const CURSO = {
+  clave: "HTC-SESAT-ENS-CV-OBL-007-V1",
+  corta: "CV-OBL-007",
+  titulo: "Infraestructura segura y seguridad en el trabajo",
+  subtitulo: "Seguridad de la infraestructura y salud y seguridad en el trabajo",
+  institucion: "Hospital Tonalá Centro, SESAT · Jefatura de Enseñanza e Investigación",
+  duracion: "1 hora 10 minutos",
+  aprobacion: 80,
+  tipo: "Curso obligatorio para todo el personal",
+  presentacion: "Un hospital seguro necesita instalaciones, equipos y servicios que funcionen, y personal que trabaje sin lesionarse. Este curso le enseña a reconocer y reportar riesgos del entorno, a actuar ante fallas de los servicios, a manejar sustancias peligrosas y a cuidar su salud en el trabajo. Es obligatorio para **todo el personal**, clínico y no clínico, y se renueva cada año.",
+  guardado: "infra_CV-OBL-007_v1",
+  appId: "INFRA_CV-OBL-007",
+  archivo: "Infraestructura_y_seguridad",
+  constancia: "Constancia de acreditación · Seguridad de la infraestructura y en el trabajo",
+  vigenciaMeses: 12,
+  vigenciaNota: "o antes, si los hallazgos de supervisión o los accidentes de trabajo de su área indican la necesidad de reforzar la capacitación",
+  firmas: ["Trabajador(a)", "Jefe(a) inmediato(a)", "Jefatura de Enseñanza e Investigación"],
+  notaConstancia: "Entregue esta constancia firmada a su jefe inmediato. La Jefatura de Enseñanza conserva el registro y lo comparte con los responsables del sistema de gestión y seguridad de la infraestructura y del programa de salud y seguridad para el personal.",
+};
+
+const MODULOS = [
+  /* ------------------------------------------------------------------ 1 */
+  { id: 1, titulo: "Un entorno seguro es tarea de todos", min: 10,
+    objetivo: "Explicar cómo se organiza la seguridad de la infraestructura del hospital y reconocer, señalizar y reportar condiciones inseguras.",
+    paginas: [
+      { t: "El sistema de gestión y seguridad de la infraestructura", b: [
+        ["p", "El hospital cuenta con un sistema para que sus instalaciones, equipos y servicios sean seguros y funcionen sin interrupciones. Integra seis áreas:"],
+        ["tabla", ["Área", "Qué protege"], [
+          ["**Protección del establecimiento**", "Las instalaciones y las personas: estructura, accesos, vigilancia y seguridad de los pacientes."],
+          ["**Materiales, sustancias y residuos peligrosos**", "La salud y el ambiente frente a productos químicos, residuos y radiaciones."],
+          ["**Fuego y humo**", "La prevención y la respuesta ante incendios (curso HTC-SESAT-ENS-CV-OBL-006)."],
+          ["**Equipo médico**", "El funcionamiento seguro de los equipos que se usan con los pacientes."],
+          ["**Servicios prioritarios**", "Energía eléctrica, agua, gases medicinales, ventilación, comunicación."],
+          ["**Emergencias externas**", "La continuidad de la atención ante sismos, inundaciones o llegada masiva de lesionados."]]],
+        ["nota", "La seguridad de la infraestructura no es solo tarea de Mantenimiento: todo el personal la cuida al usar bien las instalaciones y al reportar lo que no funciona."]] },
+      { t: "Condiciones inseguras: reconocer y reportar", b: [
+        ["p", "Una **condición insegura** es una circunstancia del entorno, del equipo o de la organización que puede causar daño, aunque todavía no haya ocurrido nada."],
+        ["lista", [
+          "Piso mojado o con derrames sin señalizar; pisos o escalones dañados.",
+          "Cables expuestos, contactos dañados, chispas u olor a quemado.",
+          "Rutas de evacuación, salidas, extintores o tableros obstruidos.",
+          "Fugas de agua o de gases; goteras cerca de equipos eléctricos.",
+          "Muebles o anaqueles inestables; objetos pesados en lo alto.",
+          "Iluminación insuficiente en pasillos, escaleras o estacionamiento.",
+          "Equipos sin mantenimiento o con falla."]],
+        ["pasos", [
+          "Si es seguro, **señalice o aísle** el riesgo (por ejemplo, letrero de piso mojado).",
+          "**Avise** al responsable del área o a Mantenimiento.",
+          "**Notifíquelo** como condición insegura por el mecanismo institucional (curso HTC-SESAT-ENS-CV-OBL-004)."]],
+        ["pendiente", "Medio y extensión para solicitar atención de Mantenimiento en cada turno."]] },
+      { t: "Señales de seguridad", b: [
+        ["tabla", ["Color", "Significado", "Ejemplos"], [
+          ["**Rojo**", "Prohibición, alto o material y equipo contra incendio.", "No fumar; extintor; hidrante; botón de paro."],
+          ["**Amarillo**", "Advertencia o precaución.", "Riesgo eléctrico; piso mojado; radiación; sustancia tóxica."],
+          ["**Verde**", "Condición segura.", "Ruta de evacuación; salida de emergencia; punto de reunión; botiquín."],
+          ["**Azul**", "Obligación.", "Uso obligatorio de equipo de protección personal; lavado de manos."]]],
+        ["lista", [
+          "Respete las señales y no las retire, tape ni mueva.",
+          "Durante obras o remodelaciones, no ingrese a las zonas delimitadas y respete las barreras y las rutas alternas."]]] },
+    ],
+    repaso: [
+      { q: "Ve un cable expuesto en un contacto junto a la cama de un paciente. ¿Qué hace?", ops: ["Lo señaliza o aísla si es seguro, avisa a Mantenimiento y lo notifica como condición insegura", "Lo cubre con cinta y no dice nada", "Espera a que alguien más lo reporte", "Desconecta todos los equipos del cuarto"], exp: "Una condición insegura se señaliza, se avisa y se notifica." },
+      { q: "¿Qué indica una señal de seguridad de color verde?", ops: ["Una condición segura, como una ruta de evacuación o una salida", "Una prohibición", "Una obligación", "Un riesgo eléctrico"], exp: "El verde indica condición segura: rutas, salidas y puntos de reunión." }],
+  },
+
+  /* ------------------------------------------------------------------ 2 */
+  { id: 2, titulo: "Servicios prioritarios y equipo médico", min: 15,
+    objetivo: "Actuar ante fallas de los servicios prioritarios y usar el equipo médico de forma segura.",
+    paginas: [
+      { t: "Los servicios que no pueden fallar", b: [
+        ["tabla", ["Servicio", "Respaldo", "Qué hace usted ante una falla"], [
+          ["**Energía eléctrica**", "Planta de emergencia que alimenta los contactos y equipos críticos.", "Verifique que los equipos críticos sigan funcionando; use linternas, no velas; avise a Mantenimiento."],
+          ["**Agua**", "Cisternas y bombas.", "Avise de inmediato; aplique el plan del área para higiene de manos y procesos que requieren agua; en Hemodiálisis, aplique el procedimiento de la Unidad."],
+          ["**Gases medicinales**", "Reserva de cilindros.", "Pase a los pacientes que dependen del oxígeno a cilindro portátil; avise de inmediato; no manipule las válvulas de zona."],
+          ["**Comunicación**", "Medios alternos definidos por el hospital.", "Use el medio alterno y avise a su jefe inmediato."],
+          ["**Elevadores**", "—", "No los use en sismo o incendio; si queda atrapado, use el botón o teléfono de emergencia y espere."]]],
+        ["pendiente", "Identificación de los contactos conectados a la planta de emergencia, medios alternos de comunicación y plan de contingencia por servicio prioritario."]] },
+      { t: "Uso seguro del equipo médico", b: [
+        ["lista", [
+          "Opere solo los equipos para los que está **capacitado** (curso HTC-SESAT-ENS-CV-OBL-018).",
+          "**Antes de usarlo**, revise que esté limpio, completo, con cables y conectores íntegros y con la etiqueta de mantenimiento vigente.",
+          "Conecte los equipos críticos (ventiladores, bombas de infusión, monitores, máquinas de hemodiálisis) en los **contactos conectados a la planta de emergencia**.",
+          "No use extensiones ni multicontactos para equipos médicos, salvo que el hospital lo autorice.",
+          "No silencie ni desactive las **alarmas** sin revisar al paciente y la causa.",
+          "No use accesorios distintos de los indicados por el fabricante."]],
+        ["alerta", "Si un equipo falla o sospecha que no funciona bien: atienda primero al paciente, **retire el equipo de uso**, etiquételo como «no usar», repórtelo a Mantenimiento o a Ingeniería Biomédica y notifíquelo. Nunca intente repararlo usted."]] },
+      { t: "Ejemplo: corte de energía", b: [
+        ["pasos", [
+          "Se va la luz en Hospitalización. En pocos segundos debe arrancar la planta de emergencia.",
+          "Revise de inmediato a los pacientes con equipos críticos: que el ventilador, las bombas y los monitores sigan funcionando.",
+          "Si un equipo no funciona, use el respaldo: ventilación manual con bolsa, cálculo manual de goteo, signos vitales manuales.",
+          "Avise a Mantenimiento y a su jefe inmediato.",
+          "Cuando regrese la energía normal, verifique de nuevo los equipos y reprograme los que se reiniciaron."]],
+        ["nota", "Los equipos con batería interna tienen una autonomía limitada. Conózcala y no la dé por segura."]] },
+    ],
+    repaso: [
+      { q: "¿Dónde se conecta una bomba de infusión de un paciente crítico?", ops: ["En un contacto conectado a la planta de emergencia", "En un multicontacto junto a otros equipos", "En cualquier contacto disponible", "En una extensión del pasillo"], exp: "Los equipos críticos deben seguir funcionando si falla la energía normal." },
+      { q: "Un monitor muestra una falla intermitente. ¿Qué hace?", ops: ["Atiende al paciente, retira el equipo de uso, lo etiqueta «no usar» y lo reporta", "Lo abre para revisar la conexión", "Silencia la alarma y sigue usándolo", "Lo guarda en el almacén sin avisar"], exp: "Un equipo dudoso se retira, se identifica y se reporta; nunca se repara por cuenta propia." }],
+  },
+
+  /* ------------------------------------------------------------------ 3 */
+  { id: 3, titulo: "Sustancias químicas y radiaciones", min: 10,
+    objetivo: "Identificar los peligros de las sustancias químicas mediante etiquetas y hojas de datos de seguridad, actuar ante derrames y exposiciones, y respetar las medidas de protección radiológica.",
+    paginas: [
+      { t: "Etiquetas y hojas de datos de seguridad", b: [
+        ["p", "Desinfectantes, antisépticos, reactivos de laboratorio, fijadores y algunos medicamentos son **sustancias químicas peligrosas**. Su etiqueta y su hoja de datos de seguridad indican cómo usarlas sin riesgo."],
+        ["tabla", ["Elemento", "Qué indica"], [
+          ["**Pictograma**", "Símbolo negro dentro de un rombo con borde rojo que muestra el tipo de peligro: inflamable, corrosivo, tóxico, irritante, peligroso para la salud, para el ambiente, comburente, gas a presión, explosivo."],
+          ["**Palabra de advertencia**", "«Peligro» para los peligros más graves y «Atención» para los menos graves."],
+          ["**Hoja de datos de seguridad (HDS)**", "Documento del fabricante, de 16 secciones: peligros, primeros auxilios, manejo y almacenamiento, equipo de protección, qué hacer ante derrames y cómo desecharla."]]],
+        ["lista", [
+          "Sepa dónde están las **HDS de su área** y consúltelas antes de usar un producto nuevo.",
+          "Use solo productos autorizados y en su envase original; si se trasvasa, el nuevo recipiente debe etiquetarse.",
+          "**Nunca mezcle productos**: el cloro mezclado con amoniaco o con ácidos libera gases tóxicos.",
+          "Use el equipo de protección que indica la HDS y almacene los productos cerrados, lejos del calor y de los alimentos."]],
+        ["pendiente", "Ubicación de las HDS en cada área y listado de sustancias peligrosas del hospital."]] },
+      { t: "Derrames y exposiciones", b: [
+        ["pasos", [
+          "Aleje a las personas y ventile si es seguro.",
+          "Avise al responsable del área.",
+          "Consulte la HDS y colóquese el equipo de protección indicado.",
+          "Contenga y limpie el derrame con el material del área (kit para derrames), conforme al procedimiento.",
+          "Deseche el material contaminado como residuo peligroso y notifique el incidente."]],
+        ["alerta", "Si el producto le cae en la piel o en los ojos: retire la ropa contaminada, enjuague con abundante agua durante al menos 15 minutos, avise a su jefe inmediato y acuda a valoración llevando la HDS o la etiqueta del producto."]] },
+      { t: "Radiaciones ionizantes", b: [
+        ["lista", [
+          "Respete la **señal de radiación** (trébol) y las luces de advertencia de las salas de rayos X.",
+          "No entre a la sala durante un estudio si no forma parte del equipo que lo realiza.",
+          "Si debe acompañar o sostener a un paciente durante un estudio, use el delantal plomado y la protección que indique el personal de Imagen.",
+          "El personal ocupacionalmente expuesto porta su dosímetro durante la jornada y aplica las medidas de protección radiológica."]],
+        ["nota", "Tiempo, distancia y blindaje: menos tiempo de exposición, más distancia de la fuente y una barrera de protección reducen la dosis."]] },
+    ],
+    repaso: [
+      { q: "¿Dónde encuentra los peligros, el equipo de protección y las medidas ante derrames de un producto químico?", ops: ["En su hoja de datos de seguridad (HDS)", "En la factura de compra", "En el expediente clínico", "En el cartel de higiene de manos"], exp: "La HDS describe peligros, protección, derrames, primeros auxilios y desecho." },
+      { q: "¿Qué ocurre si se mezcla cloro con amoniaco?", ops: ["Se liberan gases tóxicos", "Se potencia la limpieza sin riesgo", "Se neutralizan y pierden efecto sin riesgo", "Nada"], exp: "Nunca se mezclan productos químicos de limpieza." }],
+  },
+
+  /* ------------------------------------------------------------------ 4 */
+  { id: 4, titulo: "Su salud y seguridad en el trabajo", min: 15,
+    objetivo: "Reconocer los riesgos laborales del hospital y aplicar actos seguros, ergonomía y las medidas de protección y de atención ante accidentes de trabajo.",
+    paginas: [
+      { t: "Los riesgos laborales del hospital", b: [
+        ["tabla", ["Riesgo", "Ejemplos", "Cómo se previene"], [
+          ["**Biológico**", "Punciones con agujas, salpicaduras, infecciones respiratorias.", "Precauciones estándar, EPP, vacunación, manejo seguro de punzocortantes."],
+          ["**Químico**", "Desinfectantes, reactivos, citotóxicos.", "HDS, EPP, ventilación, no mezclar productos."],
+          ["**Físico**", "Radiaciones ionizantes, ruido, temperaturas, electricidad.", "Protección radiológica, señalización, mantenimiento."],
+          ["**Ergonómico**", "Movilización de pacientes, cargas, posturas prolongadas.", "Técnica correcta, ayudas mecánicas, trabajo en equipo."],
+          ["**Psicosocial**", "Cargas de trabajo, turnos, situaciones de sufrimiento, violencia.", "Identificación y atención de los factores de riesgo; apoyo institucional."],
+          ["**Locativo**", "Caídas al mismo nivel, golpes, tropiezos.", "Orden, pisos secos, calzado adecuado, iluminación."]]],
+        ["pendiente", "Matriz institucional de riesgos laborales por puesto y área."]] },
+      { t: "Movilización segura de pacientes y cargas", b: [
+        ["lista", [
+          "**Planee** el movimiento: valore cuánto puede colaborar el paciente y cuántas personas se necesitan.",
+          "**Pida ayuda** y use las ayudas disponibles (sábana deslizante, grúa, camilla, tabla de transferencia). No movilice solo a un paciente dependiente.",
+          "Ajuste la cama a la altura de su cadera y frene la cama, la silla o la camilla.",
+          "Separe los pies para tener una base amplia, flexione las rodillas, mantenga la espalda recta y la carga cerca del cuerpo.",
+          "**No gire el tronco**: gire con los pies.",
+          "Coordine el movimiento con una cuenta en voz alta («a la de tres»)."]],
+        ["nota", "Cuando sea posible, empuje en lugar de jalar y deslice en lugar de levantar."]] },
+      { t: "Equipo de protección, vacunas y vigilancia de su salud", b: [
+        ["lista", [
+          "Use el **equipo de protección personal** que corresponde a su puesto y a la tarea; cuídelo y solicite su reposición cuando se dañe.",
+          "Mantenga su esquema de **vacunación** al día, en particular hepatitis B, influenza y tétanos.",
+          "Acuda a los **exámenes médicos** de ingreso, periódicos y específicos que correspondan a su puesto.",
+          "La **Comisión de Seguridad e Higiene** recorre las áreas para identificar riesgos y proponer mejoras: colabore con ella y reporte lo que observe."]],
+        ["pendiente", "Integrantes de la Comisión de Seguridad e Higiene y área responsable del seguimiento médico del personal."]] },
+      { t: "Si sufre un accidente de trabajo", b: [
+        ["pasos", [
+          "Reciba primeros auxilios o atención de inmediato. Ante exposición a sangre, siga el procedimiento correspondiente sin demora.",
+          "Avise de inmediato a su jefe inmediato o al responsable de la guardia.",
+          "Realice el aviso de accidente de trabajo ante Recursos Humanos, que lo tramita ante la institución de seguridad social.",
+          "Notifique el accidente por el mecanismo institucional, para que se analicen sus causas y se prevenga que se repita."]],
+        ["nota", "Un accidente de trabajo es toda lesión o perturbación funcional, inmediata o posterior, o la muerte, producida repentinamente en ejercicio o con motivo del trabajo, incluido el trayecto directo entre el domicilio y el trabajo. Avise aunque la lesión parezca leve."]] },
+    ],
+    repaso: [
+      { q: "Debe pasar a un paciente dependiente de la cama a la camilla. ¿Qué es lo correcto?", ops: ["Pedir ayuda, frenar cama y camilla y usar una sábana deslizante o la ayuda disponible", "Hacerlo solo para no molestar a los compañeros", "Levantarlo con la espalda flexionada", "Girar el tronco para ganar fuerza"], exp: "Planear, pedir ayuda y usar ayudas mecánicas previene lesiones de espalda." },
+      { q: "Se tuerce el tobillo al bajar la escalera durante su turno, pero puede caminar. ¿Qué hace?", ops: ["Avisa a su jefe inmediato, recibe atención y realiza el aviso de accidente de trabajo", "No dice nada porque puede caminar", "Espera a llegar a su casa para atenderse", "Lo comenta solo con un compañero"], exp: "Todo accidente de trabajo se informa, aunque parezca leve." }],
+  },
+
+  /* ------------------------------------------------------------------ 5 */
+  { id: 5, titulo: "Seguridad de las personas y emergencias externas", min: 10,
+    objetivo: "Contribuir a la protección de los pacientes contra agresiones, actuar ante situaciones de violencia y conocer su papel ante emergencias externas.",
+    paginas: [
+      { t: "Protección de los pacientes contra agresiones", b: [
+        ["lista", [
+          "**Porte siempre su gafete** de identificación visible.",
+          "Respete y haga respetar las restricciones de acceso a las áreas clínicas.",
+          "Si ve a una persona no identificada en un área clínica, pregúntele con amabilidad a quién busca; si no se aclara, avise a Vigilancia.",
+          "Ponga especial atención a los pacientes que no pueden defenderse: adultos mayores, personas con discapacidad, con alteraciones cognitivas o psiquiátricas, niñas y niños.",
+          "Vigile las áreas aisladas o poco transitadas y repórtelas si carecen de vigilancia o iluminación."]],
+        ["alerta", "Si identifica una agresión, maltrato o riesgo inminente hacia un paciente, por parte de cualquier persona: proteja al paciente sin ponerse en riesgo, pida apoyo de Vigilancia, avise a su jefe inmediato y notifíquelo."],
+        ["pendiente", "Proceso institucional de protección del paciente contra agresiones y extensión de Vigilancia."]] },
+      { t: "Si enfrenta una situación de violencia", b: [
+        ["lista", [
+          "Mantenga la calma; hable en tono bajo y respetuoso; no discuta ni responda a provocaciones.",
+          "Conserve una distancia segura y una salida a su alcance; no se quede a solas con una persona agresiva.",
+          "Pida apoyo a sus compañeros y a Vigilancia; si hay riesgo grave, se llama al 911.",
+          "Después, informe a su jefe inmediato y notifíquelo. El hospital le ofrece apoyo."]],
+        ["nota", "Ninguna forma de violencia, acoso u hostigamiento hacia el personal es parte del trabajo. Repórtela."]] },
+      { t: "Emergencias externas", b: [
+        ["p", "Un sismo, una inundación, un accidente con muchos lesionados o la falla prolongada de un servicio pueden obligar al hospital a activar su **plan de respuesta a emergencias externas**."],
+        ["lista", [
+          "Conozca su papel en el plan de su área y dónde se reúne su equipo.",
+          "Si está fuera de turno y se activa el plan, siga las indicaciones de llamado del hospital.",
+          "Durante un sismo: **no corro, no grito, no empujo**; aléjese de ventanas y objetos que puedan caer y, al terminar, evalúe a los pacientes y el entorno.",
+          "No difunda información, fotografías ni datos de pacientes en redes sociales; la comunicación la realiza el área designada."]],
+        ["nota", "Lo esencial: reporte las condiciones inseguras; conozca qué hacer si falla un servicio; use bien el equipo; consulte las HDS; movilice con ayuda; avise todo accidente de trabajo; porte su gafete; y conozca su papel ante emergencias."],
+        ["pendiente", "Plan hospitalario de respuesta a emergencias externas y mecanismo de llamado del personal."],
+        ["p", "Al aprobar la evaluación final obtendrá su **constancia de acreditación**. Imprímala, fírmela y entréguela a su jefe inmediato."]] },
+    ],
+    repaso: [
+      { q: "Encuentra en Hospitalización a una persona sin identificación que no sabe explicar a quién visita. ¿Qué hace?", ops: ["Le pregunta con amabilidad y, si no se aclara, avisa a Vigilancia", "La ignora", "La saca del área a la fuerza", "Le pide que espere dentro del cuarto de un paciente"], exp: "Las personas no identificadas en áreas clínicas se atienden con el procedimiento de Vigilancia." },
+      { q: "Durante una emergencia externa, un familiar le pide fotografías de los lesionados para publicarlas. ¿Qué hace?", ops: ["No las toma ni las difunde; la comunicación la realiza el área designada", "Las toma y se las envía", "Las publica en sus redes para informar", "Le da los nombres de los pacientes"], exp: "La confidencialidad de los pacientes se protege también en una emergencia." }],
+  },
+];
+
+/* Evaluación final: 15 reactivos, 3 por módulo. Primera opción = correcta. */
+const EVALUACION = [
+  { m: 1, q: "¿Quién es responsable de la seguridad de la infraestructura?", ops: ["Todo el personal, coordinado por el sistema de gestión y seguridad de la infraestructura", "Solo el área de Mantenimiento", "Solo la Dirección", "Solo el personal de Vigilancia"], exp: "Todos cuidan el entorno al usarlo bien y reportar lo que no funciona." },
+  { m: 1, q: "¿Qué es una condición insegura?", ops: ["Una circunstancia que puede causar daño aunque todavía no haya ocurrido nada", "Un accidente con lesión", "Un evento centinela", "Una queja de un paciente"], exp: "La condición insegura es un riesgo presente que conviene corregir antes de que cause daño." },
+  { m: 1, q: "¿Qué significa una señal de seguridad de color azul?", ops: ["Obligación", "Prohibición", "Condición segura", "Precaución"], exp: "El azul indica una acción obligatoria, como usar equipo de protección." },
+  { m: 2, q: "Se va la luz en el servicio. ¿Qué revisa primero?", ops: ["Que los equipos críticos de los pacientes sigan funcionando", "Que funcione la computadora de la central", "Que haya luz en el estacionamiento", "Que funcione la televisión de la sala de espera"], exp: "Los pacientes con equipos críticos son la prioridad ante una falla de energía." },
+  { m: 2, q: "¿Qué debe revisar antes de usar un equipo médico?", ops: ["Que esté limpio, completo, con cables íntegros y con la etiqueta de mantenimiento vigente", "Solo que encienda", "Solo su número de inventario", "Nada, si otro compañero ya lo usó"], exp: "La revisión previa detecta fallas antes de conectar al paciente." },
+  { m: 2, q: "Falla el suministro de oxígeno de la red en su área. ¿Qué hace?", ops: ["Pasa a los pacientes que dependen del oxígeno a cilindro portátil y avisa de inmediato", "Manipula las válvulas de zona para restablecerlo", "Espera a que se restablezca solo", "Retira el oxígeno a todos los pacientes"], exp: "La prioridad es mantener el oxígeno al paciente; las válvulas las manipula solo personal autorizado." },
+  { m: 3, q: "¿Qué palabra de advertencia indica los peligros más graves en una etiqueta?", ops: ["Peligro", "Atención", "Cuidado", "Aviso"], exp: "«Peligro» se usa para los peligros más graves; «Atención», para los menos graves." },
+  { m: 3, q: "Le cae desinfectante en los ojos. ¿Qué hace primero?", ops: ["Enjuaga con abundante agua durante al menos 15 minutos", "Se frota los ojos con un pañuelo", "Espera a ver si se le quita", "Aplica otro producto para neutralizarlo"], exp: "El enjuague inmediato y prolongado reduce la lesión." },
+  { m: 3, q: "¿Cuáles son las tres medidas básicas de protección radiológica?", ops: ["Tiempo, distancia y blindaje", "Velocidad, fuerza y precisión", "Ventilación, agua y jabón", "Guantes, cubrebocas y gorro"], exp: "Menos tiempo, más distancia y una barrera reducen la dosis de radiación." },
+  { m: 4, q: "¿Cuál es una regla de la movilización segura?", ops: ["No girar el tronco: girar con los pies", "Levantar con la espalda flexionada", "Mantener la carga lejos del cuerpo", "Movilizar solo a pacientes dependientes para ahorrar tiempo"], exp: "Girar el tronco con carga es una causa frecuente de lesión de espalda." },
+  { m: 4, q: "¿A qué tipo de riesgo laboral corresponde la carga de trabajo excesiva y la violencia de terceros?", ops: ["Psicosocial", "Químico", "Biológico", "Físico"], exp: "Son factores de riesgo psicosocial que el hospital debe identificar y atender." },
+  { m: 4, q: "¿Qué incluye la definición de accidente de trabajo?", ops: ["La lesión en ejercicio o con motivo del trabajo, incluido el trayecto directo entre el domicilio y el trabajo", "Solo las lesiones graves", "Solo las lesiones que ocurren dentro del quirófano", "Solo las enfermedades crónicas"], exp: "Incluye también el trayecto directo entre el domicilio y el lugar de trabajo." },
+  { m: 5, q: "¿Por qué debe portar siempre su gafete visible?", ops: ["Para que pacientes y compañeros identifiquen al personal y se controle el acceso a las áreas clínicas", "Solo para entrar al comedor", "Porque es un requisito de imagen", "No es necesario dentro del hospital"], exp: "La identificación del personal es una barrera de protección para los pacientes." },
+  { m: 5, q: "Un familiar se altera y grita en el pasillo. ¿Qué es lo adecuado?", ops: ["Mantener la calma, hablar en tono bajo, conservar distancia y pedir apoyo a Vigilancia", "Responderle en el mismo tono", "Acercarse para calmarlo físicamente", "Quedarse a solas con él en un consultorio"], exp: "La desescalada y el apoyo de Vigilancia protegen a todos." },
+  { m: 5, q: "Durante un sismo, ¿qué conducta es correcta?", ops: ["No corro, no grito, no empujo y me alejo de las ventanas", "Salgo corriendo por el elevador", "Me coloco junto a las ventanas", "Desconecto a todos los pacientes de sus equipos"], exp: "Mantener la calma y ubicarse en la zona de menor riesgo protege a todos." },
+];
+
+/* Verificación en el servicio (la realiza el jefe inmediato). */
+const LISTA = {
+  titulo: "Verificación en el servicio (la realiza el jefe inmediato)",
+  items: [
+    "Sabe a quién y por qué medio reportar una condición insegura o una falla de Mantenimiento.",
+    "Identifica en su área los contactos conectados a la planta de emergencia y los equipos críticos.",
+    "Sabe qué hacer en su área ante una falla de energía, agua u oxígeno.",
+    "Ubica las hojas de datos de seguridad de su área e interpreta la etiqueta de un producto.",
+    "Demuestra la técnica de movilización segura o el uso de las ayudas disponibles en su área.",
+    "Porta su gafete y conoce el procedimiento ante personas no identificadas en áreas clínicas.",
+    "Conoce su papel en el plan de respuesta a emergencias externas de su área.",
+  ],
+};
+
+if (typeof module !== "undefined") module.exports = { CURSO, MODULOS, EVALUACION, LISTA };
+
+/* ==========================================================================
+   MOTOR GENÉRICO DE CURSO VIRTUAL SENCILLO — HTC-SESAT · Enseñanza
+   Registro → módulos (lecturas + preguntas de repaso) → evaluación final
+   (aprobación configurable) → constancia imprimible.
+   Todo lo específico del curso está en contenido.js (CURSO, MODULOS,
+   EVALUACION y, opcionalmente, LISTA).
+   El avance se guarda en el navegador (localStorage) y puede descargarse
+   como archivo de respaldo.
+   ========================================================================== */
+"use strict";
+const CLAVE_GUARDADO = CURSO.guardado;
+const APP_ID = CURSO.appId;
+const LISTA_V = typeof LISTA !== "undefined" ? LISTA : null;
+let RELOJ = null;
+const LET = ["A", "B", "C", "D"];
+let S = null;
+
+/* ---------- utilidades ---------- */
+const $ = (s) => document.querySelector(s);
+const app = () => document.getElementById("app");
+function esc(t) { return String(t == null ? "" : t).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;"); }
+function fmt(t) { return esc(t).replace(/\*\*([^*]+)\*\*/g, "<b>$1</b>"); }
+function hoy(iso) { try { return new Date(iso).toLocaleDateString("es-MX", { day: "numeric", month: "long", year: "numeric" }); } catch (e) { return iso; } }
+function hash(s) { let h = 2166136261; for (let i = 0; i < s.length; i++) { h ^= s.charCodeAt(i); h = Math.imul(h, 16777619); } return h >>> 0; }
+/** Orden de opciones estable para una misma clave (no cambia al recargar). */
+function orden(n, clave) { const a = [...Array(n).keys()]; let s = hash(clave) || 1; for (let i = n - 1; i > 0; i--) { s = (Math.imul(s, 1103515245) + 12345) >>> 0; const j = s % (i + 1); [a[i], a[j]] = [a[j], a[i]]; } return a; }
+function vence(iso, meses) { const d = new Date(iso); d.setMonth(d.getMonth() + meses); return d.toISOString(); }
+function arriba() { window.scrollTo(0, 0); }
+function toast(t) { const d = document.createElement("div"); d.className = "toast"; d.setAttribute("role", "status"); d.textContent = t; document.body.appendChild(d); setTimeout(() => d.remove(), 3500); }
+
+/* ---------- guardado ---------- */
+function guardar() { if (!S) return; S.mod = Date.now(); try { localStorage.setItem(CLAVE_GUARDADO, JSON.stringify(S)); } catch (e) { /* sin almacenamiento: usar respaldo */ } }
+function cargar() { try { const t = localStorage.getItem(CLAVE_GUARDADO); const o = t ? JSON.parse(t) : null; return valido(o) ? o : null; } catch (e) { return null; } }
+function valido(o) { return o && typeof o.nombre === "string" && o.mods && o.ev; }
+function nuevo(datos) { return Object.assign({ v: 1, inicio: new Date().toISOString(), mods: {}, ev: { intentos: [], actual: null, aprobado: false }, pantalla: "menu" }, datos); }
+function M(id) { if (!S.mods[id]) S.mods[id] = { pag: 0, resp: {}, hecho: false, fecha: null }; return S.mods[id]; }
+function ir(p, extra) { S.pantalla = p; Object.assign(S, extra || {}); guardar(); render(); arriba(); }
+
+function descargarRespaldo() {
+  guardar();
+  const datos = JSON.stringify({ app: APP_ID, guardado: new Date().toISOString(), estado: S });
+  const nombre = "Respaldo_" + CURSO.archivo + "_" + (S.nombre || "").normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/[^A-Za-z0-9]+/g, "_").slice(0, 40) + ".json";
+  try { const url = URL.createObjectURL(new Blob([datos], { type: "application/json" })); const a = document.createElement("a"); a.href = url; a.download = nombre; document.body.appendChild(a); a.click(); setTimeout(() => { URL.revokeObjectURL(url); a.remove(); }, 1500); toast("Respaldo descargado."); }
+  catch (e) { toast("Este navegador no permitió descargar el respaldo."); }
+}
+function cargarRespaldo() {
+  const inp = $("#archivo"); inp.value = "";
+  inp.onchange = () => {
+    const f = inp.files && inp.files[0]; if (!f || f.size > 1024 * 1024) return toast("El archivo no es un respaldo válido.");
+    const r = new FileReader();
+    r.onload = () => { let o = null; try { o = JSON.parse(r.result); } catch (e) { /* inválido */ }
+      if (!o || o.app !== APP_ID || !valido(o.estado)) return toast("El archivo no es un respaldo válido de este curso.");
+      S = o.estado; S.pantalla = "menu"; guardar(); render(); arriba(); toast("Avance recuperado: " + S.nombre); };
+    r.readAsText(f);
+  };
+  inp.click();
+}
+function confirmar(texto, boton, alAceptar) {
+  const v = document.createElement("div"); v.className = "velo";
+  v.innerHTML = '<div class="modal" role="dialog" aria-modal="true"><p>' + texto + '</p><div class="acc"><button class="btn btn-x" id="mSi">' + esc(boton) + '</button><button class="btn btn-s" id="mNo">Cancelar</button></div></div>';
+  document.body.appendChild(v); $("#mNo").focus();
+  $("#mNo").onclick = () => v.remove(); $("#mSi").onclick = () => { v.remove(); alAceptar(); };
+}
+
+/* ---------- progreso ---------- */
+const hechos = () => MODULOS.filter((m) => S.mods[m.id] && S.mods[m.id].hecho).length;
+function progreso() { if (!S) return 0; return Math.round((hechos() + (S.ev.aprobado ? 1 : 0)) / (MODULOS.length + 1) * 100); }
+function barra() {
+  const b = $("#barra"); if (!S) { b.classList.add("oculto"); return; }
+  b.classList.remove("oculto"); const p = progreso();
+  $("#pbar").style.width = p + "%"; $("#pbar").parentElement.setAttribute("aria-valuenow", p);
+  $("#ptxt").textContent = p + " % · " + hechos() + " de " + MODULOS.length + " módulos" + (S.ev.aprobado ? " · evaluación aprobada" : "");
+}
+
+/* ---------- pantallas ---------- */
+function render() {
+  if (RELOJ) { clearInterval(RELOJ); RELOJ = null; }
+  barra();
+  if (!S) return pRegistro();
+  ({ menu: pMenu, modulo: pModulo, evaluacion: pEvaluacion, comprobante: pComprobante }[S.pantalla] || pMenu)();
+}
+
+function pRegistro() {
+  const previo = cargar();
+  let h = '<div class="card"><div class="kicker">' + CURSO.corta + ' · ' + esc(CURSO.tipo) + '</div><h1>' + CURSO.titulo + '</h1>' +
+    '<p class="tenue"><b>' + esc(CURSO.subtitulo) + '</b></p><p>' + fmt(CURSO.presentacion) + '</p>' +
+    '<ul class="lst"><li>' + MODULOS.length + ' módulos breves de lectura, con preguntas de repaso.</li><li>Una evaluación final de ' + EVALUACION.length + ' preguntas; se aprueba con ' + CURSO.aprobacion + ' % o más.</li><li>Duración aproximada: ' + CURSO.duracion + '. Puede hacer pausas: su avance se guarda en este navegador.</li><li>Al aprobar, imprima su constancia y entréguela a su jefe inmediato.</li></ul></div>';
+  if (previo) h += '<div class="card"><h2>Continuar</h2><p>Hay un avance guardado de <b>' + esc(previo.nombre) + '</b>.</p><div class="acc"><button class="btn btn-p" id="bCont">Continuar mi curso</button><button class="btn btn-x" id="bOtro">Empezar como otra persona</button></div></div>';
+  else h += '<div class="card"><h2>Sus datos</h2>' +
+    '<div class="campos"><div><label for="fNom">Nombre completo</label><input type="text" id="fNom" maxlength="80" autocomplete="name"></div>' +
+    '<div><label for="fEmp">Número de empleado</label><input type="text" id="fEmp" maxlength="20" inputmode="numeric"></div>' +
+    '<div><label for="fPue">Puesto</label><input type="text" id="fPue" maxlength="60" placeholder="Por ejemplo: enfermera general"></div>' +
+    '<div><label for="fAre">Área o servicio</label><input type="text" id="fAre" maxlength="60" placeholder="Por ejemplo: Urgencias"></div></div>' +
+    '<p class="aviso">Estos datos solo aparecen en su constancia. No escriba información de pacientes.</p><p class="error" id="err" role="alert"></p>' +
+    '<div class="acc"><button class="btn btn-p" id="bIni">Comenzar el curso</button></div></div>';
+  h += '<div class="card"><p class="tenue" style="margin:0">¿Tiene un archivo de respaldo de otro equipo? <button class="btn btn-s" id="bCarg" style="min-height:40px;padding:.4rem .9rem;margin-left:.4rem">Cargar respaldo</button></p></div>';
+  app().innerHTML = h;
+  $("#bCarg").onclick = cargarRespaldo;
+  if (previo) {
+    $("#bCont").onclick = () => { S = previo; render(); arriba(); };
+    $("#bOtro").onclick = () => confirmar("Se borrará el avance guardado de " + esc(previo.nombre) + ". ¿Desea continuar?", "Borrar y empezar", () => { try { localStorage.removeItem(CLAVE_GUARDADO); } catch (e) { /* sin acción */ } render(); });
+  } else {
+    $("#bIni").onclick = () => {
+      const v = (id) => $(id).value.trim().replace(/\s+/g, " ");
+      const d = { nombre: v("#fNom"), empleado: v("#fEmp"), puesto: v("#fPue"), area: v("#fAre") };
+      if (d.nombre.length < 5) return ($("#err").textContent = "Escriba su nombre completo.", $("#fNom").focus());
+      if (!d.puesto || !d.area) return ($("#err").textContent = "Escriba su puesto y su área o servicio.", (d.puesto ? $("#fAre") : $("#fPue")).focus());
+      S = nuevo(d); guardar(); render(); arriba();
+    };
+  }
+}
+
+function pMenu() {
+  const todos = hechos() === MODULOS.length;
+  let h = '<div class="card"><div class="kicker">' + esc(CURSO.titulo) + ' · ' + CURSO.corta + '</div><h1>Hola, ' + esc(S.nombre.split(" ")[0]) + '</h1><p class="tenue" style="margin:0">Realice los módulos en orden. Cuando termine los ' + MODULOS.length + ', se habilita la evaluación final.</p></div><div class="mods" style="margin-top:1rem">';
+  MODULOS.forEach((m, i) => {
+    const st = S.mods[m.id]; const bloq = i > 0 && !(S.mods[MODULOS[i - 1].id] && S.mods[MODULOS[i - 1].id].hecho);
+    const estado = st && st.hecho ? '<span class="estado e-ok">Completado</span>' : (bloq ? '<span class="estado e-no">Disponible al terminar el módulo ' + (i) + '</span>' : (st && st.pag ? '<span class="estado e-cur">En curso</span>' : '<span class="estado e-cur">Pendiente</span>'));
+    h += '<div class="mod' + (st && st.hecho ? " hecho" : "") + (bloq ? " bloq" : "") + '"><div class="n">' + (st && st.hecho ? "✓" : m.id) + '</div><div class="info"><b>' + esc(m.titulo) + '</b><small>' + m.min + ' minutos</small><br>' + estado + '</div>' +
+      (bloq ? "" : '<button class="btn ' + (st && st.hecho ? "btn-s" : "btn-p") + '" data-m="' + m.id + '">' + (st && st.hecho ? "Repasar" : (st && st.pag ? "Continuar" : "Iniciar")) + '</button>') + '</div>';
+  });
+  const ev = S.ev;
+  h += '<div class="mod' + (ev.aprobado ? " hecho" : "") + (todos ? "" : " bloq") + '"><div class="n">' + (ev.aprobado ? "✓" : "★") + '</div><div class="info"><b>Evaluación final</b><small>' + EVALUACION.length + ' preguntas · aprobación ' + CURSO.aprobacion + ' %</small><br>' +
+    (ev.aprobado ? '<span class="estado e-ok">Aprobada · ' + ev.cal + ' %</span>' : (todos ? '<span class="estado e-cur">' + (ev.intentos.length ? "Intentos: " + ev.intentos.length : "Disponible") + '</span>' : '<span class="estado e-no">Disponible al terminar los ' + MODULOS.length + ' módulos</span>')) + '</div>' +
+    (ev.aprobado ? '<button class="btn btn-v" id="bComp">Ver constancia</button>' : (todos ? '<button class="btn btn-p" id="bEv">' + (ev.actual ? "Continuar" : "Presentar") + '</button>' : "")) + '</div></div>';
+  h += '<div class="acc no-imp"><button class="btn btn-s" id="bResp">Descargar respaldo</button><button class="btn btn-s" id="bCarg">Cargar respaldo</button><button class="btn btn-x der" id="bReset">Reiniciar curso</button></div>';
+  app().innerHTML = h;
+  app().querySelectorAll("[data-m]").forEach((b) => b.onclick = () => { const st = M(+b.dataset.m); if (st.hecho) st.pag = 0; ir("modulo", { mid: +b.dataset.m }); });
+  if ($("#bEv")) $("#bEv").onclick = () => ir("evaluacion");
+  if ($("#bComp")) $("#bComp").onclick = () => ir("comprobante");
+  $("#bResp").onclick = descargarRespaldo; $("#bCarg").onclick = cargarRespaldo;
+  $("#bReset").onclick = () => confirmar("Se borrará todo su avance en este navegador. ¿Desea reiniciar el curso?", "Reiniciar", () => { try { localStorage.removeItem(CLAVE_GUARDADO); } catch (e) { /* sin acción */ } S = null; render(); arriba(); });
+}
+
+function bloque(b) {
+  const [t, v, w] = b;
+  if (t === "p") return "<p>" + fmt(v) + "</p>";
+  if (t === "pasos") return '<ol class="pasos">' + v.map((x) => "<li>" + fmt(x) + "</li>").join("") + "</ol>";
+  if (t === "reloj") return '<div class="reloj"><div><b>Práctica guiada</b><br>' + fmt(w) + '</div><div class="reloj-c"><span class="seg" data-s="' + v + '">' + v + ' s</span><button class="btn btn-p" data-reloj="' + v + '">Iniciar</button></div></div>';
+  if (t === "lista") return '<ul class="lst">' + v.map((x) => "<li>" + fmt(x) + "</li>").join("") + "</ul>";
+  if (t === "tabla") return '<table class="t' + (v.length > 2 ? " t3" : "") + '"><thead><tr>' + v.map((x) => "<th>" + esc(x) + "</th>").join("") + "</tr></thead><tbody>" + w.map((r) => "<tr>" + r.map((c, k) => '<td data-h="' + esc(v[k]) + '">' + fmt(c) + "</td>").join("") + "</tr>").join("") + "</tbody></table>";
+  if (t === "nota") return '<div class="nota">' + fmt(v) + "</div>";
+  if (t === "alerta") return '<div class="alerta">' + fmt(v) + "</div>";
+  if (t === "pendiente") return '<div class="pend"><b>Pendiente de definición institucional:</b> ' + fmt(v) + "</div>";
+  return "";
+}
+function pModulo() {
+  const m = MODULOS.find((x) => x.id === S.mid); if (!m) return ir("menu");
+  const st = M(m.id); const nL = m.paginas.length, nQ = m.repaso.length, total = nL + nQ + 1;
+  const i = Math.min(st.pag, total - 1);
+  let h = '<div class="card"><div class="kicker">Módulo ' + m.id + ' de ' + MODULOS.length + ' · ' + esc(m.titulo) + '</div>' +
+    '<div class="pbar" style="margin:.3rem 0 1rem"><span style="width:' + Math.round((i + 1) / total * 100) + '%"></span></div>';
+  let puede = true;
+  if (i < nL) {
+    const pg = m.paginas[i];
+    if (i === 0) h += '<p class="tenue"><b>Objetivo:</b> ' + esc(m.objetivo) + '</p>';
+    h += '<h2>' + esc(pg.t) + '</h2>' + pg.b.map(bloque).join("");
+  } else if (i < nL + nQ) {
+    const qi = i - nL, q = m.repaso[qi], r = st.resp[qi], ord = orden(q.ops.length, "r" + m.id + "-" + qi);
+    const resp = r && r.listo;
+    h += '<h2>Repaso ' + (qi + 1) + ' de ' + nQ + '</h2><div class="preg">' + esc(q.q) + '</div><div class="ops">' +
+      ord.map((oi, k) => { let c = "op"; if (resp) { if (oi === 0) c += " bien"; else if (r.sel === oi) c += " mal"; } else if (r && r.sel === oi) c += " sel";
+        return '<button class="' + c + '" data-o="' + oi + '"' + (resp ? " disabled" : "") + '><span class="l">' + LET[k] + '</span><span>' + esc(q.ops[oi]) + '</span></button>'; }).join("") + '</div>';
+    if (resp) h += '<div class="fb ' + (r.sel === 0 ? "ok" : "no") + '" role="status"><b>' + (r.sel === 0 ? "¡Correcto! " : "La respuesta correcta es: " + esc(q.ops[0]) + ". ") + '</b>' + esc(q.exp) + '</div>';
+    else { h += '<div class="acc"><button class="btn btn-p" id="bRev"' + (r && r.sel != null ? "" : " disabled") + '>Comprobar</button></div>'; puede = false; }
+  } else {
+    h += '<h2>¡Módulo completado!</h2><p>Terminó el módulo <b>' + esc(m.titulo) + '</b>.</p><ul class="lst"><li>' + m.paginas.map((p) => esc(p.t)).join("</li><li>") + '</li></ul>';
+    if (!st.hecho) { st.hecho = true; st.fecha = new Date().toISOString(); guardar(); barra(); }
+  }
+  const ult = i === total - 1;
+  h += '<div class="acc no-imp">' + (i > 0 ? '<button class="btn btn-s" id="bAnt">Anterior</button>' : "") +
+    (ult ? '<button class="btn btn-p" id="bMenu">' + (MODULOS[m.id] && !(S.mods[m.id + 1] && S.mods[m.id + 1].hecho) ? "Ir al módulo " + (m.id + 1) : (hechos() === MODULOS.length && !S.ev.aprobado ? "Ir a la evaluación final" : "Volver al menú")) + '</button>'
+      : '<button class="btn btn-p" id="bSig"' + (puede ? "" : " disabled") + '>Siguiente</button>') +
+    '<button class="btn btn-s der" id="bSalir">Guardar y salir</button><span class="paso">Página ' + (i + 1) + ' de ' + total + '</span></div></div>';
+  app().innerHTML = h;
+  app().querySelectorAll(".op[data-o]").forEach((b) => b.onclick = () => { const qi = i - nL; st.resp[qi] = { sel: +b.dataset.o }; guardar(); render(); });
+  if ($("#bRev")) $("#bRev").onclick = () => { st.resp[i - nL].listo = true; guardar(); render(); const f = app().querySelector(".fb"); if (f) f.scrollIntoView({ block: "nearest" }); };
+  if ($("#bAnt")) $("#bAnt").onclick = () => { st.pag = i - 1; guardar(); render(); arriba(); };
+  if ($("#bSig")) $("#bSig").onclick = () => { st.pag = i + 1; guardar(); render(); arriba(); };
+  if ($("#bMenu")) $("#bMenu").onclick = () => {
+    const sig = MODULOS[m.id];
+    if (sig && !(S.mods[sig.id] && S.mods[sig.id].hecho)) ir("modulo", { mid: sig.id });
+    else if (hechos() === MODULOS.length && !S.ev.aprobado) ir("evaluacion"); else ir("menu");
+  };
+  $("#bSalir").onclick = () => ir("menu");
+  app().querySelectorAll("[data-reloj]").forEach((b) => b.onclick = () => iniciarReloj(b));
+}
+
+/** Cuenta regresiva para practicar la técnica (no se guarda). */
+function iniciarReloj(b) {
+  if (RELOJ) { clearInterval(RELOJ); RELOJ = null; }
+  const caja = b.closest(".reloj"), seg = caja.querySelector(".seg"); let n = +b.dataset.reloj;
+  app().querySelectorAll(".reloj").forEach((c) => c.classList.remove("fin", "corre"));
+  caja.classList.add("corre"); b.textContent = "Reiniciar"; seg.textContent = n + " s";
+  RELOJ = setInterval(() => { n -= 1; seg.textContent = n + " s";
+    if (n <= 0) { clearInterval(RELOJ); RELOJ = null; caja.classList.remove("corre"); caja.classList.add("fin"); seg.textContent = "¡Listo!"; b.textContent = "Repetir"; } }, 1000);
+}
+
+function pEvaluacion() {
+  if (hechos() < MODULOS.length) return ir("menu");
+  const ev = S.ev;
+  if (!ev.actual) { ev.actual = { n: ev.intentos.length + 1, resp: {}, enviado: false }; guardar(); }
+  const a = ev.actual;
+  let h = '<div class="card"><div class="kicker">Evaluación final · intento ' + a.n + '</div><h1>Evaluación final: ' + esc(CURSO.titulo) + '</h1>';
+  if (!a.enviado) h += '<p>Responda las ' + EVALUACION.length + ' preguntas y pulse «Enviar respuestas». Se aprueba con <b>' + CURSO.aprobacion + ' %</b> (' + Math.ceil(CURSO.aprobacion * EVALUACION.length / 100) + ' aciertos o más).</p>';
+  else {
+    const ok = EVALUACION.filter((q, k) => a.resp[k] === 0).length, cal = Math.round(ok / EVALUACION.length * 100), aprueba = cal >= CURSO.aprobacion;
+    h += '<div class="resultado"><div class="cal ' + (aprueba ? "ok" : "no") + '">' + cal + ' %</div><p><b>' + ok + ' de ' + EVALUACION.length + '</b> respuestas correctas · ' + (aprueba ? "Evaluación aprobada" : "Evaluación no aprobada") + '</p></div>' +
+      '<div class="acc no-imp" style="justify-content:center;margin-top:0">' + (aprueba ? '<button class="btn btn-v" id="bComp">Ver e imprimir mi constancia</button>' : '<button class="btn btn-p" id="bOtra">Volver a intentarlo</button><button class="btn btn-s" id="bMenu">Repasar los módulos</button>') + '</div>';
+  }
+  EVALUACION.forEach((q, k) => {
+    const ord = orden(q.ops.length, "e" + a.n + "-" + k), sel = a.resp[k];
+    h += '<div class="evq"><div class="preg">' + (k + 1) + '. ' + esc(q.q) + '</div><div class="ops">' +
+      ord.map((oi, j) => { let c = "op"; if (a.enviado) { if (oi === 0) c += " bien"; else if (sel === oi) c += " mal"; } else if (sel === oi) c += " sel";
+        return '<button class="' + c + '" data-q="' + k + '" data-o="' + oi + '"' + (a.enviado ? " disabled" : "") + ' aria-pressed="' + (sel === oi) + '"><span class="l">' + LET[j] + '</span><span>' + esc(q.ops[oi]) + '</span></button>'; }).join("") + '</div>' +
+      (a.enviado ? '<div class="fb ' + (sel === 0 ? "ok" : "no") + '">' + (sel === 0 ? "<b>Correcto.</b> " : "<b>Correcta: " + esc(q.ops[0]) + ".</b> ") + esc(q.exp) + '</div>' : "") + '</div>';
+  });
+  const cont = Object.keys(a.resp).length;
+  if (!a.enviado) h += '<div class="acc no-imp"><button class="btn btn-p" id="bEnv"' + (cont === EVALUACION.length ? "" : " disabled") + '>Enviar respuestas</button><span class="paso">Contestadas: ' + cont + ' de ' + EVALUACION.length + '</span><button class="btn btn-s der" id="bSalir">Guardar y salir</button></div>';
+  h += '</div>';
+  app().innerHTML = h;
+  app().querySelectorAll("[data-q]").forEach((b) => b.onclick = () => {
+    a.resp[+b.dataset.q] = +b.dataset.o; guardar();
+    const y = window.scrollY; render(); window.scrollTo(0, y);
+  });
+  if ($("#bEnv")) $("#bEnv").onclick = () => {
+    a.enviado = true; const ok = EVALUACION.filter((q, k) => a.resp[k] === 0).length, cal = Math.round(ok / EVALUACION.length * 100);
+    ev.intentos.push({ n: a.n, fecha: new Date().toISOString(), aciertos: ok, cal });
+    if (cal >= CURSO.aprobacion) { ev.aprobado = true; ev.cal = cal; ev.fecha = new Date().toISOString(); }
+    guardar(); render(); arriba();
+  };
+  if ($("#bOtra")) $("#bOtra").onclick = () => { ev.actual = null; ir("evaluacion"); };
+  if ($("#bMenu")) $("#bMenu").onclick = () => { ev.actual = null; ir("menu"); };
+  if ($("#bComp")) $("#bComp").onclick = () => { ev.actual = null; ir("comprobante"); };
+  if ($("#bSalir")) $("#bSalir").onclick = () => ir("menu");
+}
+
+function pComprobante() {
+  if (!S.ev.aprobado) return ir("menu");
+  const ev = S.ev;
+  let h = '<div class="card comp"><div class="inst">' + esc(CURSO.institucion) + '</div><h1>' + esc(CURSO.constancia) + '</h1>' +
+    '<p style="text-align:center" class="tenue">' + CURSO.clave + ' · Curso virtual · ' + CURSO.duracion + '</p>' +
+    '<table class="t"><tbody>' +
+    '<tr><th style="width:38%">Nombre</th><td>' + esc(S.nombre) + '</td></tr>' +
+    '<tr><th>Número de empleado</th><td>' + esc(S.empleado || "—") + '</td></tr>' +
+    '<tr><th>Puesto</th><td>' + esc(S.puesto) + '</td></tr>' +
+    '<tr><th>Área o servicio</th><td>' + esc(S.area) + '</td></tr>' +
+    '<tr><th>Fecha de inicio</th><td>' + hoy(S.inicio) + '</td></tr>' +
+    '<tr><th>Fecha de acreditación</th><td>' + hoy(ev.fecha) + '</td></tr>' +
+    '<tr><th>Calificación final</th><td><b>' + ev.cal + ' %</b> (mínimo aprobatorio ' + CURSO.aprobacion + ' %) · intentos: ' + ev.intentos.length + '</td></tr>' +
+    (CURSO.vigenciaMeses ? '<tr><th>Vigencia</th><td>Hasta el ' + hoy(vence(ev.fecha, CURSO.vigenciaMeses)) + (CURSO.vigenciaNota ? ', ' + esc(CURSO.vigenciaNota) : '') + '</td></tr>' : '') +
+    '</tbody></table>' +
+    '<h3>Módulos concluidos</h3><table class="t"><thead><tr><th>Módulo</th><th>Fecha</th></tr></thead><tbody>' +
+    MODULOS.map((m) => '<tr><td>' + m.id + '. ' + esc(m.titulo) + '</td><td>' + (S.mods[m.id] && S.mods[m.id].fecha ? hoy(S.mods[m.id].fecha) : "—") + '</td></tr>').join("") + '</tbody></table>' +
+    (LISTA_V ? '<h3>' + esc(LISTA_V.titulo) + '</h3>' + LISTA_V.items.map((x) => '<div class="chk"><span class="c"></span><span>' + esc(x) + '</span></div>').join("") : '') +
+    '<div class="firmas">' + CURSO.firmas.map((f, k) => '<div>' + esc(f) + '<br>' + (k === 0 ? esc(S.nombre) : 'Nombre y firma') + '</div>').join("") + '</div>' +
+    '<p class="tenue" style="font-size:.8rem;margin-top:1.5rem">' + esc(CURSO.notaConstancia) + '</p>' +
+    '<div class="acc no-imp"><button class="btn btn-p" id="bImp">Imprimir o guardar como PDF</button><button class="btn btn-s" id="bResp">Descargar respaldo</button><button class="btn btn-s der" id="bMenu">Volver al menú</button></div></div>';
+  app().innerHTML = h;
+  $("#bImp").onclick = () => window.print(); $("#bResp").onclick = descargarRespaldo; $("#bMenu").onclick = () => ir("menu");
+}
+
+/* ---------- arranque ---------- */
+document.addEventListener("DOMContentLoaded", () => { S = null; render(); });
+
+</script>
+</body>
+</html>

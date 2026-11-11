@@ -34,11 +34,14 @@ assets/
 educacion-continua/
   cursos-obligatorios.html         Subpágina: cursos obligatorios
   cursos-especializados.html       Subpágina: cursos especializados
-cursos/
-  induccion/
-    index.html                     Curso CV-OBL-001 · Inducción institucional
-  aesp/
-    index.html                     Curso CV-OBL-002 · Acciones Esenciales para la Seguridad del Paciente
+cursos/                            Cursos obligatorios (cada uno en su carpeta, archivo index.html)
+  induccion/                       CV-OBL-001 · Inducción institucional
+  aesp/                            CV-OBL-002 · Acciones Esenciales para la Seguridad del Paciente
+  higiene-de-manos/                CV-OBL-003 · Higiene de manos
+  notificacion-de-eventos/         CV-OBL-004 · Notificación de eventos
+  prevencion-de-infecciones/       CV-OBL-005 · Prevención y control de infecciones
+  fuego-y-humo/                    CV-OBL-006 · Fuego y humo
+  infraestructura-segura/          CV-OBL-007 · Infraestructura segura y seguridad en el trabajo
 ```
 
 Todas las páginas usan `assets/estilos.css`; si se omite ese archivo, el sitio se ve sin diseño.
